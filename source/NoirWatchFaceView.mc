@@ -173,13 +173,16 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
             drawWeather(dc, cx, h, s, clock, gray);
         }
 
+        // Mise en page en trois groupes : contexte (météo, date), heure au centre
+        // optique (47 %), santé et batterie. Seule l'heure est en blanc.
+
         // DATE
         dc.setColor(gray, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, (h * 0.23).toNumber(), Graphics.FONT_SMALL, dateText(),
+        dc.drawText(cx, (h * 0.25).toNumber(), Graphics.FONT_TINY, dateText(),
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         // HEURE (secondes seulement hors veille : redessin chaque seconde)
-        drawTime(dc, cx, (h * 0.435).toNumber(), s, Graphics.FONT_NUMBER_HOT, white, clock, mShowSeconds);
+        drawTime(dc, cx, (h * 0.47).toNumber(), s, Graphics.FONT_NUMBER_HOT, white, clock, mShowSeconds);
 
         // PAS
         var stepsText = "--";
@@ -190,17 +193,17 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
 
         // INDICATEURS
         var spacing = (w * 0.255).toNumber();
-        var iconY = (h * 0.61).toNumber();
-        var valueY = (h * 0.70).toNumber();
+        var iconY = (h * 0.66).toNumber();
+        var valueY = (h * 0.735).toNumber();
         drawCenteredIcon(dc, cx - spacing, iconY, mHeart);
-        drawValue(dc, cx - spacing, valueY, mHeartRateText, white);
+        drawValue(dc, cx - spacing, valueY, mHeartRateText, gray);
         drawCenteredIcon(dc, cx, iconY, mBolt);
-        drawValue(dc, cx, valueY, mBodyBatteryText, white);
+        drawValue(dc, cx, valueY, mBodyBatteryText, gray);
         drawCenteredIcon(dc, cx + spacing, iconY, mSteps);
-        drawValue(dc, cx + spacing, valueY, stepsText, white);
+        drawValue(dc, cx + spacing, valueY, stepsText, gray);
 
         // BATTERIE MONTRE
-        drawBattery(dc, cx, (h * 0.85).toNumber(), System.getSystemStats().battery, s,
+        drawBattery(dc, cx, (h * 0.87).toNumber(), System.getSystemStats().battery, s,
             gray, Graphics.FONT_SMALL);
     }
 
@@ -241,7 +244,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
                 weatherText = t.format("%.0f") + "°";
             }
         }
-        var weatherY = (h * 0.105).toNumber();
+        var weatherY = (h * 0.13).toNumber();
         var weatherFont = Graphics.FONT_SMALL;
         var textW = dc.getTextWidthInPixels(weatherText, weatherFont);
         var iconW = weatherIcon.getWidth();
@@ -337,7 +340,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
 
     function drawValue(dc, x, y, value, color) {
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(x, y, Graphics.FONT_MEDIUM, value,
+        dc.drawText(x, y, Graphics.FONT_SMALL, value,
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
     }
 
