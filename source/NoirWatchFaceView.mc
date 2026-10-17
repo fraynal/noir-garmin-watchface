@@ -19,7 +19,6 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
     var mPhoneOff;
     var mPhoneOffDim;
     var mDnd;
-    var mDndDim;
 
     // Données natives du cadran, rafraîchies lors des notifications Garmin.
     var mHeartRateId;
@@ -48,7 +47,6 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         mPhoneOff = WatchUi.loadResource(Rez.Drawables.phone_off);
         mPhoneOffDim = WatchUi.loadResource(Rez.Drawables.phone_off_dim);
         mDnd = WatchUi.loadResource(Rez.Drawables.dnd);
-        mDndDim = WatchUi.loadResource(Rez.Drawables.dnd_dim);
         mWeatherIcons = [
             WatchUi.loadResource(Rez.Drawables.weather_sun),          // 0
             WatchUi.loadResource(Rez.Drawables.weather_moon),         // 1
@@ -196,7 +194,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
 
         // HEURE (secondes seulement hors veille : redessin chaque seconde)
         var timeY = (h * 0.47).toNumber();
-        drawTime(dc, cx, timeY, s, Graphics.FONT_NUMBER_HOT, white, clock, mShowSeconds);
+        drawTime(dc, cx, timeY, s, Graphics.FONT_NUMBER_HOT, white, clock, mShowSeconds, 0);
 
         // PAS
         var stepsText = "--";
@@ -226,7 +224,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
 
     // INDICATEURS D'ÉTAT (réglage ShowStatusIcons), affichés seulement si actifs :
     // téléphone déconnecté à 9 h, à hauteur de l'heure (rare, doit se voir) ;
-    // « Ne pas déranger » à gauche de la batterie, qui reste centrée.
+    // « Ne pas déranger » à gauche de la batterie, qui reste centrée (dnd null : masquée).
     function drawStatusIcons(dc, phoneX, phoneY, batteryX, batteryY, s, phoneOff, dnd) {
         if (!mShowStatusIcons) {
             return;
@@ -235,7 +233,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         if (!settings.phoneConnected) {
             drawCenteredIcon(dc, phoneX, phoneY, phoneOff);
         }
-        if (settings.doNotDisturb) {
+        if (dnd != null && settings.doNotDisturb) {
             drawCenteredIcon(dc, batteryX - (12 * s).toNumber() - dnd.getWidth() / 2, batteryY, dnd);
         }
     }
@@ -317,7 +315,8 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
     // HH:MM centré en (cx, y). À droite, sans décaler HH:MM : les secondes
     // alignées sur le bas des chiffres, AM/PM aligné sur leur haut.
     // Hauteur des chiffres estimée par ascent - descent de la police.
-    function drawTime(dc, cx, y, s, font, color, clock, withSeconds) {
+    // weight : épaississement en pixels (0 = police telle quelle), voir drawSleep.
+    function drawTime(dc, cx, y, s, font, color, clock, withSeconds, weight) {
         var hour = clock.hour;
         var suffix = null;
         var is12Hour = use12Hour();
@@ -327,7 +326,10 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         }
         var main = (is12Hour ? hour.format("%d") : hour.format("%02d")) + ":" + clock.min.format("%02d");
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, y, font, main, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        // Faux gras : le texte redessiné décalé d'un pixel à chaque passe.
+        for (var i = 0; i <= weight; i++) {
+            dc.drawText(cx + i - weight / 2, y, font, main, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        }
 
         // Ligne de base des chiffres (texte centré sur la hauteur de police).
         var baseline = y - dc.getFontHeight(font) / 2 + Graphics.getFontAscent(font);
@@ -355,6 +357,13 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
     // placées par rapport à l'heure, en hauteurs de sa police (les chiffres
     // n'occupent qu'environ la moitié de cette hauteur sur la fenix 9).
     // Réglage visuel : SLEEP_DATE_OFFSET / SLEEP_BATTERY_OFFSET.
+    // Veille lisible : l'écran est assombri par la montre en veille (non
+    // réglable) ; un trait fin éclaire trop peu de pixels. Heure épaissie
+    // (faux gras) et plus claire, texte secondaire éclairci. Luminance à
+    // contrôler au Screen Heat Map (limite 10 %, 2,36 % avant ce changement).
+    const SLEEP_TIME_COLOR = 0xC4C9D0;
+    const SLEEP_TEXT_COLOR = 0x8C939C;
+    const SLEEP_TIME_WEIGHT = 2;
     const SLEEP_DATE_OFFSET = 1.0;
     const SLEEP_BATTERY_OFFSET = 1.15;
 
@@ -364,14 +373,15 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         var timeY = h / 2 + (clock.min / 5 % 5 - 2) * step;
         var timeFont = Graphics.FONT_NUMBER_MILD;
         var timeH = dc.getFontHeight(timeFont);
-        dc.setColor(0x71787F, Graphics.COLOR_TRANSPARENT);
+        dc.setColor(SLEEP_TEXT_COLOR, Graphics.COLOR_TRANSPARENT);
         dc.drawText(cx, (timeY - timeH * SLEEP_DATE_OFFSET).toNumber(), Graphics.FONT_XTINY, dateText(),
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-        drawTime(dc, cx, timeY, s, timeFont, 0x9A9FA7, clock, false);
+        drawTime(dc, cx, timeY, s, timeFont, SLEEP_TIME_COLOR, clock, false, (SLEEP_TIME_WEIGHT * s).toNumber());
         var batteryY = (timeY + timeH * SLEEP_BATTERY_OFFSET).toNumber();
         var batteryX = drawBattery(dc, cx, batteryY,
-            System.getSystemStats().battery, s, 0x71787F, Graphics.FONT_XTINY);
-        drawStatusIcons(dc, cx - (w * 0.38).toNumber(), timeY, batteryX, batteryY, s, mPhoneOffDim, mDndDim);
+            System.getSystemStats().battery, s, SLEEP_TEXT_COLOR, Graphics.FONT_XTINY);
+        // Pas de lune « Ne pas déranger » en veille : la nuit elle serait toujours là.
+        drawStatusIcons(dc, cx - (w * 0.38).toNumber(), timeY, batteryX, batteryY, s, mPhoneOffDim, null);
     }
 
     // Garmin renvoie directement les abréviations dans

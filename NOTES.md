@@ -211,6 +211,16 @@ tracés, sans texte SVG. Ancienne icône du modèle Garmin :
 - Note publication : taille de l'icône du lanceur variable selon la montre
   (60–70 px) ; le SVG est redimensionné par le compilateur (avertissement).
 
+## Chantier 12 : veille lisible (17/10/2026)
+
+- Heure épaissie (faux gras : texte redessiné décalé d'1 px, 2 px au total)
+  et éclaircie (`#C4C9D0`) ; texte secondaire `#8C939C`. Taille et
+  composition inchangées. Constantes `SLEEP_TIME_COLOR`, `SLEEP_TEXT_COLOR`,
+  `SLEEP_TIME_WEIGHT` en tête de `drawSleep`.
+- Lune « Ne pas déranger » masquée en veille/sommeil (toujours présente la
+  nuit, donc sans information) ; conservée sur l'écran actif.
+- Pic de luminance mesuré au simulateur : 2,32 % (limite 10 %).
+
 ## Feuille de route (décidée le 17/10/2026)
 
 ### Deux versions, un seul code
@@ -250,7 +260,7 @@ pour la Pro (exclusion de code dans `monkey.jungle`). Prix Pro : à décider
 
 ### Ordre
 1. ~~Écran du mode sommeil~~ (fait, chantier 11).
-2. Veille lisible.
+2. ~~Veille lisible~~ (fait, chantier 12).
 3. Séparation Noir / Noir Pro, retrait de la trace DBG, publication de Noir.
 4. Indicateurs configurables, puis mode Auto ; publication de Noir Pro.
 
