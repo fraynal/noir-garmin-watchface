@@ -4,6 +4,8 @@ import Toybox.WatchUi;
 
 class NoirWatchFaceApp extends Application.AppBase {
 
+    var mView;
+
     function initialize() {
         AppBase.initialize();
     }
@@ -18,7 +20,16 @@ class NoirWatchFaceApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() as [Views] or [Views, InputDelegates] {
-        return [ new NoirWatchFaceView() ];
+        mView = new NoirWatchFaceView();
+        return [ mView ];
+    }
+
+    // Réglages modifiés depuis Garmin Connect sur le téléphone.
+    function onSettingsChanged() as Void {
+        if (mView != null) {
+            mView.loadSettings();
+        }
+        WatchUi.requestUpdate();
     }
 
 }

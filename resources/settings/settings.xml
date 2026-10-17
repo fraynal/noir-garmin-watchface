@@ -1,0 +1,25 @@
+<settings>
+    <setting propertyKey="@Properties.ShowSeconds" title="@Strings.ShowSecondsTitle">
+        <settingConfig type="boolean" />
+    </setting>
+    <setting propertyKey="@Properties.TimeFormat" title="@Strings.TimeFormatTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.FollowWatch</listEntry>
+            <listEntry value="1">@Strings.TimeFormat24</listEntry>
+            <listEntry value="2">@Strings.TimeFormat12</listEntry>
+        </settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.ShowWeather" title="@Strings.ShowWeatherTitle">
+        <settingConfig type="boolean" />
+    </setting>
+    <setting propertyKey="@Properties.TemperatureUnit" title="@Strings.TemperatureUnitTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.FollowWatch</listEntry>
+            <listEntry value="1">@Strings.Celsius</listEntry>
+            <listEntry value="2">@Strings.Fahrenheit</listEntry>
+        </settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.ShowBatteryPercent" title="@Strings.ShowBatteryPercentTitle">
+        <settingConfig type="boolean" />
+    </setting>
+</settings>

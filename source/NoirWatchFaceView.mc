@@ -6,6 +6,7 @@ import Toybox.Time.Gregorian;
 import Toybox.ActivityMonitor;
 import Toybox.Weather;
 import Toybox.Complications;
+import Toybox.Application;
 
 class NoirWatchFaceView extends WatchUi.WatchFace {
 
@@ -23,8 +24,16 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
     // Vrai pendant la veille (écran toujours allumé, mode basse consommation).
     var mSleeping = false;
 
+    // Réglages (resources/settings), relus par loadSettings().
+    var mShowSeconds = false;
+    var mTemperatureUnit = 0; // 0 = comme la montre, 1 = °C, 2 = °F
+    var mShowWeather = true;
+    var mShowBatteryPercent = true;
+    var mTimeFormat = 0;      // 0 = comme la montre, 1 = 24 h, 2 = 12 h
+
     function initialize() {
         WatchFace.initialize();
+        loadSettings();
         // Charger une seule fois les ressources (pas dans onUpdate).
         mHeart = WatchUi.loadResource(Rez.Drawables.heart);
         mBolt = WatchUi.loadResource(Rez.Drawables.bolt);
@@ -46,6 +55,25 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
             WatchUi.loadResource(Rez.Drawables.weather_ice),          // 13
             WatchUi.loadResource(Rez.Drawables.weather_unknown)       // 14
         ];
+    }
+
+    function loadSettings() as Void {
+        mShowSeconds = Properties.getValue("ShowSeconds");
+        mTemperatureUnit = Properties.getValue("TemperatureUnit");
+        mShowWeather = Properties.getValue("ShowWeather");
+        mShowBatteryPercent = Properties.getValue("ShowBatteryPercent");
+        mTimeFormat = Properties.getValue("TimeFormat");
+    }
+
+    // « Comme la montre » : relu à chaque dessin, la montre peut changer de réglage.
+    function use12Hour() {
+        return mTimeFormat == 0 ? !System.getDeviceSettings().is24Hour : mTimeFormat == 2;
+    }
+
+    function useFahrenheit() {
+        return mTemperatureUnit == 0
+            ? System.getDeviceSettings().temperatureUnits == System.UNIT_STATUTE
+            : mTemperatureUnit == 2;
     }
 
     // Enregistrer les complications quand le cadran devient visible.
@@ -140,9 +168,45 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
             return;
         }
 
-        // MÉTÉO : icône + température, centrées au-dessus de la date.
-        // Jour/nuit selon le lever/coucher réel du soleil à la position
-        // de l'observation météo ; repli sur 7h-19h si indisponible.
+        // MÉTÉO (réglage ShowWeather) : icône + température, centrées au-dessus de la date.
+        if (mShowWeather) {
+            drawWeather(dc, cx, h, s, clock, gray);
+        }
+
+        // DATE
+        dc.setColor(gray, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(cx, (h * 0.23).toNumber(), Graphics.FONT_SMALL, dateText(),
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+
+        // HEURE (secondes seulement hors veille : redessin chaque seconde)
+        drawTime(dc, cx, (h * 0.435).toNumber(), s, Graphics.FONT_NUMBER_HOT, white, clock, mShowSeconds);
+
+        // PAS
+        var stepsText = "--";
+        var info = ActivityMonitor.getInfo();
+        if (info != null && info.steps != null) {
+            stepsText = formatSteps(info.steps);
+        }
+
+        // INDICATEURS
+        var spacing = (w * 0.255).toNumber();
+        var iconY = (h * 0.61).toNumber();
+        var valueY = (h * 0.70).toNumber();
+        drawCenteredIcon(dc, cx - spacing, iconY, mHeart);
+        drawValue(dc, cx - spacing, valueY, mHeartRateText, white);
+        drawCenteredIcon(dc, cx, iconY, mBolt);
+        drawValue(dc, cx, valueY, mBodyBatteryText, white);
+        drawCenteredIcon(dc, cx + spacing, iconY, mSteps);
+        drawValue(dc, cx + spacing, valueY, stepsText, white);
+
+        // BATTERIE MONTRE
+        drawBattery(dc, cx, (h * 0.85).toNumber(), System.getSystemStats().battery, s,
+            gray, Graphics.FONT_SMALL);
+    }
+
+    // Jour/nuit selon le lever/coucher réel du soleil à la position
+    // de l'observation météo ; repli sur 7h-19h si indisponible.
+    function drawWeather(dc, cx, h, s, clock, gray) {
         var isNight = (clock.hour < 7 || clock.hour >= 19);
         var weatherIcons = mWeatherIcons as Toybox.Lang.Array;
         var weatherIcon = weatherIcons[14];
@@ -169,7 +233,12 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
                 weatherIcon = weatherIcons[weatherIconIndex(conditions.condition, isNight)];
             }
             if (conditions.temperature != null) {
-                weatherText = conditions.temperature.format("%.0f") + "°";
+                // Garmin fournit la température en °C.
+                var t = conditions.temperature;
+                if (useFahrenheit()) {
+                    t = t * 9 / 5.0 + 32;
+                }
+                weatherText = t.format("%.0f") + "°";
             }
         }
         var weatherY = (h * 0.105).toNumber();
@@ -184,40 +253,40 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         dc.setColor(gray, Graphics.COLOR_TRANSPARENT);
         dc.drawText(startX + iconW + gap, weatherY, weatherFont, weatherText,
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+    }
 
-        // DATE
-        dc.setColor(gray, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, (h * 0.23).toNumber(), Graphics.FONT_SMALL, dateText(),
-            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-
-        // HEURE
-        var hh = clock.hour.format("%02d");
-        var mm = clock.min.format("%02d");
-        dc.setColor(white, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, (h * 0.435).toNumber(), Graphics.FONT_NUMBER_HOT, hh + ":" + mm,
-            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-
-        // PAS
-        var stepsText = "--";
-        var info = ActivityMonitor.getInfo();
-        if (info != null && info.steps != null) {
-            stepsText = formatSteps(info.steps);
+    // HH:MM centré en (cx, y). À droite, sans décaler HH:MM : les secondes
+    // alignées sur le bas des chiffres, AM/PM aligné sur leur haut.
+    // Hauteur des chiffres estimée par ascent - descent de la police.
+    function drawTime(dc, cx, y, s, font, color, clock, withSeconds) {
+        var hour = clock.hour;
+        var suffix = null;
+        var is12Hour = use12Hour();
+        if (is12Hour) {
+            suffix = hour < 12 ? "AM" : "PM";
+            hour = hour % 12 == 0 ? 12 : hour % 12;
         }
+        var main = (is12Hour ? hour.format("%d") : hour.format("%02d")) + ":" + clock.min.format("%02d");
+        dc.setColor(color, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(cx, y, font, main, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
-        // INDICATEURS
-        var spacing = (w * 0.255).toNumber();
-        var iconY = (h * 0.61).toNumber();
-        var valueY = (h * 0.70).toNumber();
-        drawCenteredIcon(dc, cx - spacing, iconY, mHeart);
-        drawValue(dc, cx - spacing, valueY, mHeartRateText, white);
-        drawCenteredIcon(dc, cx, iconY, mBolt);
-        drawValue(dc, cx, valueY, mBodyBatteryText, white);
-        drawCenteredIcon(dc, cx + spacing, iconY, mSteps);
-        drawValue(dc, cx + spacing, valueY, stepsText, white);
-
-        // BATTERIE MONTRE
-        drawBattery(dc, cx, (h * 0.85).toNumber(), System.getSystemStats().battery, s,
-            gray, Graphics.FONT_SMALL);
+        // Ligne de base des chiffres (texte centré sur la hauteur de police).
+        var baseline = y - dc.getFontHeight(font) / 2 + Graphics.getFontAscent(font);
+        var x = cx + dc.getTextWidthInPixels(main, font) / 2 + (6 * s).toNumber();
+        if (withSeconds) {
+            // Pas de police de chiffres plus petite que FONT_NUMBER_MILD : police de texte.
+            // Chiffres de FONT_TINY ≈ moitié de ceux de FONT_NUMBER_MILD sur la fenix 9 (mesuré sur capture).
+            var secFont = Graphics.FONT_TINY;
+            dc.drawText(x, baseline - Graphics.getFontAscent(secFont), secFont,
+                clock.sec.format("%02d"), Graphics.TEXT_JUSTIFY_LEFT);
+        }
+        if (suffix != null) {
+            var digitsTop = baseline - (Graphics.getFontAscent(font) - Graphics.getFontDescent(font));
+            // Même estimation pour AM/PM : ses majuscules commencent à « descent » sous le haut du texte.
+            var smallFont = Graphics.FONT_XTINY;
+            dc.drawText(x, digitsTop - Graphics.getFontDescent(smallFont), smallFont, suffix,
+                Graphics.TEXT_JUSTIFY_LEFT);
+        }
     }
 
     // VEILLE : date, heure et batterie en gris, sans météo ni mesures de santé.
@@ -239,10 +308,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         dc.setColor(0x71787F, Graphics.COLOR_TRANSPARENT);
         dc.drawText(cx, (timeY - timeH * SLEEP_DATE_OFFSET).toNumber(), Graphics.FONT_XTINY, dateText(),
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-        dc.setColor(0x9A9FA7, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, timeY, timeFont,
-            clock.hour.format("%02d") + ":" + clock.min.format("%02d"),
-            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        drawTime(dc, cx, timeY, s, timeFont, 0x9A9FA7, clock, false);
         drawBattery(dc, cx, (timeY + timeH * SLEEP_BATTERY_OFFSET).toNumber(),
             System.getSystemStats().battery, s, 0x71787F, Graphics.FONT_XTINY);
     }
@@ -356,9 +422,10 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         var nubW = (2 * s).toNumber();
         var nubH = (4 * s).toNumber();
         var iconW = bodyW + pad / 3 + nubW;
-        var gap = (7 * s).toNumber();
-        var label = percent.format("%.0f") + "%";
-        var textW = dc.getTextWidthInPixels(label, font);
+        // Réglage ShowBatteryPercent : icône seule, centrée, si désactivé.
+        var label = mShowBatteryPercent ? percent.format("%.0f") + "%" : "";
+        var gap = mShowBatteryPercent ? (7 * s).toNumber() : 0;
+        var textW = mShowBatteryPercent ? dc.getTextWidthInPixels(label, font) : 0;
         var totalW = iconW + gap + textW;
         var x = (cx - totalW / 2).toNumber();
         var top = (y - iconH / 2).toNumber();

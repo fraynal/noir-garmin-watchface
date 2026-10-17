@@ -91,6 +91,36 @@ taille et d'écart entre les éléments comptent, pas leur place à l'écran).
   *File > View Screen Heat Map* > *Start* pour la luminance sur 24 h.
 - Montre : activer l'écran toujours allumé, baisser le poignet.
 
+## Chantier 4 : options (17/10/2026)
+
+Réglages dans l'app Garmin Connect (cadran > réglages).
+Fichiers : `resources/settings/properties.xml` (valeurs par défaut) et
+`settings.xml` (interface) ; `NoirWatchFaceApp.onSettingsChanged` fait relire
+les réglages à la vue (`loadSettings`).
+
+| Réglage | Valeurs | Défaut |
+|---|---|---|
+| `ShowSeconds` | oui / non | non |
+| `TimeFormat` | comme la montre / 24 h / 12 h (AM/PM) | comme la montre |
+| `ShowWeather` | oui / non | oui |
+| `TemperatureUnit` | comme la montre / °C / °F | comme la montre |
+| `ShowBatteryPercent` | oui / non | oui |
+
+- « Comme la montre » relit `System.getDeviceSettings()` (`is24Hour`,
+  `temperatureUnits`) à chaque dessin.
+- Secondes : jamais en veille (redessin une fois par minute). Police
+  `FONT_TINY`, sans police de chiffres plus petite que `FONT_NUMBER_MILD`.
+- `HH:MM` reste centré ; secondes alignées sur le bas des chiffres, AM/PM sur
+  leur haut. La hauteur des chiffres est estimée (`ascent - descent`) :
+  à revérifier sur une autre montre.
+- En 12 h : pas de zéro devant l'heure (`1:05`).
+- AM/PM et batterie sans % s'appliquent aussi en veille.
+
 ## Chantiers suivants
+- **Indicateurs configurables** (gros chantier) : choisir les trois
+  indicateurs (aujourd'hui FC, Body Battery, pas) parmi stress, calories,
+  étages, distance, minutes d'intensité… via les complications Garmin.
+  Demande une liste de choix par emplacement, une icône et un format de valeur
+  pour chaque donnée.
 - **Icône du lanceur** : 24×24 alors que la fenix 9 attend 65×65
   (agrandie automatiquement, avertissement du compilateur).
