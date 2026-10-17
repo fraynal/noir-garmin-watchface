@@ -165,6 +165,16 @@ choix suivant à chaque appui. Mêmes propriétés et libellés que
 - Limite connue : si le coucher tombe après minuit (hautes latitudes en été),
   le test `now < lever || now >= coucher` est faux. Rare en France.
 
+## Chantier 8 : traduction (17/10/2026)
+
+- Textes en anglais par défaut (`resources/strings`), français dans
+  `resources-fre/strings` ; langues déclarées dans le manifest (`eng`, `fre`).
+- Garmin utilise ses propres codes de langue : français = `fre` (pas `fra`).
+  Un mauvais code ne provoque aucune erreur de compilation : la traduction
+  est simplement ignorée. Vérifier dans `bin/NoirWatchFace-settings.json`
+  (section `languages`).
+- Toute nouvelle chaîne s'ajoute dans les deux fichiers.
+
 ## Chantiers suivants
 - **Indicateurs configurables** (gros chantier) : choisir les trois
   indicateurs (aujourd'hui FC, Body Battery, pas) parmi stress, calories,
