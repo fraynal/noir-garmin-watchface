@@ -84,9 +84,9 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
 
     // Appelé lors d'un changement de fréquence cardiaque ou Body Battery.
     function onComplicationChanged(id as Complications.Id) as Void {
-        if (id == mHeartRateId) {
+        if (id.equals(mHeartRateId)) {
             mHeartRateText = readComplicationText(mHeartRateId);
-        } else if (id == mBodyBatteryId) {
+        } else if (id.equals(mBodyBatteryId)) {
             mBodyBatteryText = readComplicationText(mBodyBatteryId);
         }
         WatchUi.requestUpdate();
@@ -118,14 +118,30 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         var clock = System.getClockTime();
 
         // MÉTÉO : icône + température, centrées au-dessus de la date.
-        // Le choix jour/nuit utilise ici l'heure locale (7h-19h),
-        // pas les heures réelles de lever/coucher du soleil.
+        // Jour/nuit selon le lever/coucher réel du soleil à la position
+        // de l'observation météo ; repli sur 7h-19h si indisponible.
         var isNight = (clock.hour < 7 || clock.hour >= 19);
         var weatherIcons = mWeatherIcons as Toybox.Lang.Array;
         var weatherIcon = weatherIcons[14];
         var weatherText = "--°";
         var conditions = Weather.getCurrentConditions();
         if (conditions != null) {
+            var location = conditions.observationLocationPosition;
+            if (location != null) {
+                var now = Time.now();
+                var sunrise = Weather.getSunrise(location, now);
+                var sunset = Weather.getSunset(location, now);
+                if (sunrise != null && sunset != null) {
+                    isNight = now.lessThan(sunrise) || now.greaterThan(sunset);
+                }
+                // DEBUG temporaire : diagnostic jour/nuit.
+                System.println("DBG cond=" + conditions.condition + " loc=" + location.toDegrees()
+                    + " now=" + debugTime(now) + " rise=" + debugTime(sunrise)
+                    + " set=" + debugTime(sunset) + " night=" + isNight);
+            } else {
+                System.println("DBG cond=" + conditions.condition + " loc=null clock=" + clock.hour + ":" + clock.min
+                    + " now=" + debugTime(Time.now()) + " night=" + isNight);
+            }
             if (conditions.condition != null) {
                 weatherIcon = weatherIcons[weatherIconIndex(conditions.condition, isNight)];
             }
@@ -182,6 +198,15 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
 
         // BATTERIE MONTRE
         drawBattery(dc, cx, (h * 0.85).toNumber(), System.getSystemStats().battery);
+    }
+
+    // DEBUG temporaire : heure locale d'un Moment.
+    function debugTime(m) {
+        if (m == null) {
+            return "null";
+        }
+        var i = Gregorian.info(m, Time.FORMAT_SHORT);
+        return i.day + "/" + i.month + " " + i.hour.format("%02d") + ":" + i.min.format("%02d");
     }
 
     function drawCenteredIcon(dc, x, y, bitmap, size) {

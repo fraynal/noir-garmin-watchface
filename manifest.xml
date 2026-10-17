@@ -22,6 +22,7 @@
         -->
         <iq:permissions>
             <iq:uses-permission id="ComplicationSubscriber"/>
+            <iq:uses-permission id="Positioning"/>
         </iq:permissions>
         <!--
             Use "Monkey C: Edit Languages" from the Visual Studio Code command
