@@ -207,33 +207,41 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
             gray, Graphics.FONT_SMALL);
     }
 
-    // Jour/nuit selon le lever/coucher réel du soleil à la position
-    // de l'observation météo ; repli sur 7h-19h si indisponible.
+    // Jour/nuit selon le lever/coucher du soleil calculés par la montre
+    // (complications, secondes depuis minuit en heure locale) ;
+    // repli sur 7h-19h si indisponibles.
+    function isNight(clock) {
+        var sunrise = readComplicationValue(Complications.COMPLICATION_TYPE_SUNRISE);
+        var sunset = readComplicationValue(Complications.COMPLICATION_TYPE_SUNSET);
+        var now = clock.hour * 3600 + clock.min * 60 + clock.sec;
+        // DEBUG temporaire : validation jour/nuit sur la montre.
+        System.println("DBG now=" + now + " rise=" + sunrise + " set=" + sunset);
+        if (sunrise == null || sunset == null) {
+            return clock.hour < 7 || clock.hour >= 19;
+        }
+        return now < sunrise || now >= sunset;
+    }
+
+    function readComplicationValue(type) {
+        try {
+            var complication = Complications.getComplication(new Complications.Id(type));
+            if (complication != null) {
+                return complication.value;
+            }
+        } catch (e) {
+            // Complication indisponible (simulateur, montre sans GPS récent…).
+        }
+        return null;
+    }
+
     function drawWeather(dc, cx, h, s, clock, gray) {
-        var isNight = (clock.hour < 7 || clock.hour >= 19);
         var weatherIcons = mWeatherIcons as Toybox.Lang.Array;
         var weatherIcon = weatherIcons[14];
         var weatherText = "--°";
         var conditions = Weather.getCurrentConditions();
         if (conditions != null) {
-            var location = conditions.observationLocationPosition;
-            if (location != null) {
-                var now = Time.now();
-                var sunrise = Weather.getSunrise(location, now);
-                var sunset = Weather.getSunset(location, now);
-                if (sunrise != null && sunset != null) {
-                    isNight = now.lessThan(sunrise) || now.greaterThan(sunset);
-                }
-                // DEBUG temporaire : diagnostic jour/nuit.
-                System.println("DBG cond=" + conditions.condition + " loc=" + location.toDegrees()
-                    + " now=" + debugTime(now) + " rise=" + debugTime(sunrise)
-                    + " set=" + debugTime(sunset) + " night=" + isNight);
-            } else {
-                System.println("DBG cond=" + conditions.condition + " loc=null clock=" + clock.hour + ":" + clock.min
-                    + " now=" + debugTime(Time.now()) + " night=" + isNight);
-            }
             if (conditions.condition != null) {
-                weatherIcon = weatherIcons[weatherIconIndex(conditions.condition, isNight)];
+                weatherIcon = weatherIcons[weatherIconIndex(conditions.condition, isNight(clock))];
             }
             if (conditions.temperature != null) {
                 // Garmin fournit la température en °C.
@@ -323,15 +331,6 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         return today.day_of_week.toString().toUpper()
             + " " + today.day.toString()
             + " " + today.month.toString().toUpper();
-    }
-
-    // DEBUG temporaire : heure locale d'un Moment.
-    function debugTime(m) {
-        if (m == null) {
-            return "null";
-        }
-        var i = Gregorian.info(m, Time.FORMAT_SHORT);
-        return i.day + "/" + i.month + " " + i.hour.format("%02d") + ":" + i.min.format("%02d");
     }
 
     function drawCenteredIcon(dc, x, y, bitmap) {

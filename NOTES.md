@@ -18,6 +18,8 @@
   La montre affiche cette permission à l'installation.
 
 ### Bug possible restant : heures de lever/coucher
+> Remplacé au chantier 7 : le calcul n'utilise plus `Weather.getSunrise`.
+
 Dans le simulateur (SDK 9.2.0, fenix9pro47mm), `getSunrise` / `getSunset`
 renvoient des heures décalées d'environ **+6 h** et un coucher daté de la
 **veille** (coucher avant le lever) :
@@ -150,6 +152,18 @@ choix suivant à chaque appui. Mêmes propriétés et libellés que
 - Simulateur : *Trigger App Settings*.
 - La doc du SDK ne liste pas la fenix 9 (listes arrêtées à la fenix 8) :
   à confirmer sur la montre.
+
+## Chantier 7 : jour/nuit par les complications lever/coucher (17/10/2026)
+
+- `isNight` lit les complications `COMPLICATION_TYPE_SUNRISE` / `SUNSET` :
+  secondes depuis minuit en heure locale, calculées par la montre.
+  Comparaison sur l'heure de la journée seulement : plus de décalage de date
+  ni de fuseau. Repli sur 7h–19h si indisponibles.
+- `Weather.getSunrise`/`getSunset` et la permission `Positioning` retirés.
+- Trace temporaire réduite : `DBG now=… rise=… set=…` (secondes), à retirer
+  après validation sur la montre.
+- Limite connue : si le coucher tombe après minuit (hautes latitudes en été),
+  le test `now < lever || now >= coucher` est faux. Rare en France.
 
 ## Chantiers suivants
 - **Indicateurs configurables** (gros chantier) : choisir les trois
