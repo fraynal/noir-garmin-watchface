@@ -198,6 +198,19 @@ blanc, trois points aux couleurs des indicateurs). Chiffres dessinés en
 tracés, sans texte SVG. Ancienne icône du modèle Garmin :
 `design/launcher_icon-original.svg`. Plus d'avertissement à la compilation.
 
+## Chantier 11 : écran du mode sommeil (17/10/2026)
+
+- Un cadran Connect IQ ne peut pas être choisi comme cadran du mode Sommeil :
+  la montre propose son cadran de sommeil ou « Ne pas changer ». Le SDK
+  n'expose pas le mode concentration.
+- Noir lit le créneau de sommeil du profil (`UserProfile.sleepTime` /
+  `wakeTime`, réglé dans Garmin Connect) et affiche l'écran de veille pendant
+  ce créneau, même poignet levé. Créneau passant minuit géré.
+- Permission `UserProfile` ajoutée (affichée à l'installation).
+- Réglage montre : Focus Modes > Sleep > Watch Face > « Ne pas changer ».
+- Note publication : taille de l'icône du lanceur variable selon la montre
+  (60–70 px) ; le SVG est redimensionné par le compilateur (avertissement).
+
 ## Feuille de route (décidée le 17/10/2026)
 
 ### Deux versions, un seul code
@@ -236,7 +249,7 @@ pour la Pro (exclusion de code dans `monkey.jungle`). Prix Pro : à décider
   (déjà partout, contraire à l'identité de Noir).
 
 ### Ordre
-1. Écran du mode sommeil (même rendu que la veille).
+1. ~~Écran du mode sommeil~~ (fait, chantier 11).
 2. Veille lisible.
 3. Séparation Noir / Noir Pro, retrait de la trace DBG, publication de Noir.
 4. Indicateurs configurables, puis mode Auto ; publication de Noir Pro.

@@ -7,6 +7,7 @@ import Toybox.ActivityMonitor;
 import Toybox.Weather;
 import Toybox.Complications;
 import Toybox.Application;
+import Toybox.UserProfile;
 
 class NoirWatchFaceView extends WatchUi.WatchFace {
 
@@ -174,7 +175,8 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
 
         var clock = System.getClockTime();
 
-        if (mSleeping) {
+        // Écran de veille aussi pendant les heures de sommeil, même poignet levé.
+        if (mSleeping || isSleepTime(clock)) {
             drawSleep(dc, w, h, s, clock);
             return;
         }
@@ -251,6 +253,21 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
             return clock.hour < 7 || clock.hour >= 19;
         }
         return now < sunrise || now >= sunset;
+    }
+
+    // Heures de sommeil du profil utilisateur (Garmin Connect > profil > sommeil).
+    // Un cadran Connect IQ ne peut pas être choisi comme cadran du mode Sommeil :
+    // régler la montre sur « Ne pas changer » et Noir prend le relais.
+    function isSleepTime(clock) {
+        var profile = UserProfile.getProfile();
+        if (profile == null || profile.sleepTime == null || profile.wakeTime == null) {
+            return false;
+        }
+        var bed = profile.sleepTime.value();
+        var wake = profile.wakeTime.value();
+        var now = clock.hour * 3600 + clock.min * 60 + clock.sec;
+        // Créneau qui passe minuit (23:00 → 07:00) ou non (sommeil de jour).
+        return bed > wake ? (now >= bed || now < wake) : (now >= bed && now < wake);
     }
 
     function readComplicationValue(type) {
