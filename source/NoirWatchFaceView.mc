@@ -14,6 +14,11 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
     var mBolt;
     var mSteps;
     var mWeatherIcons;
+    // Indicateurs d'état : normal et atténué (veille).
+    var mPhoneOff;
+    var mPhoneOffDim;
+    var mDnd;
+    var mDndDim;
 
     // Données natives du cadran, rafraîchies lors des notifications Garmin.
     var mHeartRateId;
@@ -30,6 +35,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
     var mShowWeather = true;
     var mShowBatteryPercent = true;
     var mTimeFormat = 0;      // 0 = comme la montre, 1 = 24 h, 2 = 12 h
+    var mShowStatusIcons = true;
 
     function initialize() {
         WatchFace.initialize();
@@ -38,6 +44,10 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         mHeart = WatchUi.loadResource(Rez.Drawables.heart);
         mBolt = WatchUi.loadResource(Rez.Drawables.bolt);
         mSteps = WatchUi.loadResource(Rez.Drawables.steps);
+        mPhoneOff = WatchUi.loadResource(Rez.Drawables.phone_off);
+        mPhoneOffDim = WatchUi.loadResource(Rez.Drawables.phone_off_dim);
+        mDnd = WatchUi.loadResource(Rez.Drawables.dnd);
+        mDndDim = WatchUi.loadResource(Rez.Drawables.dnd_dim);
         mWeatherIcons = [
             WatchUi.loadResource(Rez.Drawables.weather_sun),          // 0
             WatchUi.loadResource(Rez.Drawables.weather_moon),         // 1
@@ -63,6 +73,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         mShowWeather = Properties.getValue("ShowWeather");
         mShowBatteryPercent = Properties.getValue("ShowBatteryPercent");
         mTimeFormat = Properties.getValue("TimeFormat");
+        mShowStatusIcons = Properties.getValue("ShowStatusIcons");
     }
 
     // « Comme la montre » : relu à chaque dessin, la montre peut changer de réglage.
@@ -182,7 +193,8 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         // HEURE (secondes seulement hors veille : redessin chaque seconde)
-        drawTime(dc, cx, (h * 0.47).toNumber(), s, Graphics.FONT_NUMBER_HOT, white, clock, mShowSeconds);
+        var timeY = (h * 0.47).toNumber();
+        drawTime(dc, cx, timeY, s, Graphics.FONT_NUMBER_HOT, white, clock, mShowSeconds);
 
         // PAS
         var stepsText = "--";
@@ -203,8 +215,27 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         drawValue(dc, cx + spacing, valueY, stepsText, gray);
 
         // BATTERIE MONTRE
-        drawBattery(dc, cx, (h * 0.87).toNumber(), System.getSystemStats().battery, s,
+        var batteryY = (h * 0.87).toNumber();
+        var batteryX = drawBattery(dc, cx, batteryY, System.getSystemStats().battery, s,
             gray, Graphics.FONT_SMALL);
+
+        drawStatusIcons(dc, cx - (w * 0.38).toNumber(), timeY, batteryX, batteryY, s, mPhoneOff, mDnd);
+    }
+
+    // INDICATEURS D'ÉTAT (réglage ShowStatusIcons), affichés seulement si actifs :
+    // téléphone déconnecté à 9 h, à hauteur de l'heure (rare, doit se voir) ;
+    // « Ne pas déranger » à gauche de la batterie, qui reste centrée.
+    function drawStatusIcons(dc, phoneX, phoneY, batteryX, batteryY, s, phoneOff, dnd) {
+        if (!mShowStatusIcons) {
+            return;
+        }
+        var settings = System.getDeviceSettings();
+        if (!settings.phoneConnected) {
+            drawCenteredIcon(dc, phoneX, phoneY, phoneOff);
+        }
+        if (settings.doNotDisturb) {
+            drawCenteredIcon(dc, batteryX - (8 * s).toNumber() - dnd.getWidth() / 2, batteryY, dnd);
+        }
     }
 
     // Jour/nuit selon le lever/coucher du soleil calculés par la montre
@@ -320,8 +351,10 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         dc.drawText(cx, (timeY - timeH * SLEEP_DATE_OFFSET).toNumber(), Graphics.FONT_XTINY, dateText(),
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         drawTime(dc, cx, timeY, s, timeFont, 0x9A9FA7, clock, false);
-        drawBattery(dc, cx, (timeY + timeH * SLEEP_BATTERY_OFFSET).toNumber(),
+        var batteryY = (timeY + timeH * SLEEP_BATTERY_OFFSET).toNumber();
+        var batteryX = drawBattery(dc, cx, batteryY,
             System.getSystemStats().battery, s, 0x71787F, Graphics.FONT_XTINY);
+        drawStatusIcons(dc, cx - (w * 0.38).toNumber(), timeY, batteryX, batteryY, s, mPhoneOffDim, mDndDim);
     }
 
     // Garmin renvoie directement les abréviations dans
@@ -440,6 +473,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         }
         dc.drawText(x + iconW + gap, y, font, label,
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        return x;
     }
 
     function formatSteps(steps) {

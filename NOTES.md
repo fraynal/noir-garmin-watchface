@@ -175,6 +175,18 @@ choix suivant à chaque appui. Mêmes propriétés et libellés que
   (section `languages`).
 - Toute nouvelle chaîne s'ajoute dans les deux fichiers.
 
+## Chantier 9 : indicateurs d'état (17/10/2026)
+
+Affichés seulement quand l'état est actif (réglage `ShowStatusIcons`, oui par défaut) :
+- **Téléphone déconnecté** (`phoneConnected`) : téléphone barré à 9 h, à
+  hauteur de l'heure (position fixe, `cx - 0.38 × largeur`). Rare, doit se voir.
+- **Ne pas déranger** (`doNotDisturb`) : lune mauve (`#B9A2D8`, même dessin
+  que la lune météo) à gauche de la batterie, qui reste centrée
+  (`drawBattery` renvoie sa position gauche).
+- En veille : mêmes icônes en version atténuée (`*_dim`), décalées avec le reste.
+- Non retenus : notifications (cloche), alarme réglée (presque toujours active).
+  Les modes de concentration ne sont pas accessibles aux cadrans.
+
 ## Chantiers suivants
 - **Indicateurs configurables** (gros chantier) : choisir les trois
   indicateurs (aujourd'hui FC, Body Battery, pas) parmi stress, calories,

@@ -22,4 +22,7 @@
     <setting propertyKey="@Properties.ShowBatteryPercent" title="@Strings.ShowBatteryPercentTitle">
         <settingConfig type="boolean" />
     </setting>
+    <setting propertyKey="@Properties.ShowStatusIcons" title="@Strings.ShowStatusIconsTitle">
+        <settingConfig type="boolean" />
+    </setting>
 </settings>

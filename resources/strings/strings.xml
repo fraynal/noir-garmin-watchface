@@ -10,4 +10,5 @@
     <string id="Fahrenheit">Fahrenheit</string>
     <string id="FollowWatch">Same as watch</string>
     <string id="ShowBatteryPercentTitle">Battery percentage</string>
+    <string id="ShowStatusIconsTitle">Status icons</string>
 </strings>

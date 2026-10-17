@@ -17,4 +17,8 @@
     <bitmap id="weather_wind" filename="../images/weather_wind.svg" />
     <bitmap id="weather_ice" filename="../images/weather_ice.svg" />
     <bitmap id="weather_unknown" filename="../images/weather_unknown.svg" />
+    <bitmap id="phone_off" filename="../images/phone_off.svg" />
+    <bitmap id="phone_off_dim" filename="../images/phone_off_dim.svg" />
+    <bitmap id="dnd" filename="../images/dnd.svg" />
+    <bitmap id="dnd_dim" filename="../images/dnd_dim.svg" />
 </resources>

@@ -4,6 +4,7 @@
     <property id="TemperatureUnit" type="number">0</property>
     <property id="ShowWeather" type="boolean">true</property>
     <property id="ShowBatteryPercent" type="boolean">true</property>
+    <property id="ShowStatusIcons" type="boolean">true</property>
     <!-- 0 = comme la montre, 1 = 24 h, 2 = 12 h (AM/PM) -->
     <property id="TimeFormat" type="number">0</property>
 </properties>

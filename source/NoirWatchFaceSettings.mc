@@ -13,6 +13,7 @@ class NoirSettingsMenu extends WatchUi.Menu2 {
         addToggle("ShowWeather", Rez.Strings.ShowWeatherTitle);
         addItem(new WatchUi.MenuItem(Rez.Strings.TemperatureUnitTitle, choiceLabel("TemperatureUnit"), "TemperatureUnit", null));
         addToggle("ShowBatteryPercent", Rez.Strings.ShowBatteryPercentTitle);
+        addToggle("ShowStatusIcons", Rez.Strings.ShowStatusIconsTitle);
     }
 
     function addToggle(key as String, label as ResourceId) as Void {
