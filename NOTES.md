@@ -116,6 +116,27 @@ les réglages à la vue (`loadSettings`).
 - En 12 h : pas de zéro devant l'heure (`1:05`).
 - AM/PM et batterie sans % s'appliquent aussi en veille.
 
+## Chantier 5 : mise en page et icônes (17/10/2026)
+
+### Mise en page (écran actif)
+Trois groupes : contexte (météo 13 %, date 25 % en `FONT_TINY`), heure au
+centre optique (47 %), santé (icônes 66 %, valeurs 73,5 % en gris clair
+`FONT_SMALL`) et batterie (87 %). Seule l'heure est en blanc.
+
+### Icônes
+- PNG remplacés par des SVG (`resources/images/*.svg`), convertis en images
+  par le compilateur : météo 36 px, santé 28 px (attributs `width`/`height`).
+- Originaux intacts dans `design/icons-original/` (hors `resources/`).
+- Corrections : 7 icônes débordaient du cadre 24×24 (soleil/lune décalés,
+  précipitations sous y = 24) ; leur `viewBox` est agrandi (24 minimum) pour
+  tout contenir. Nuages remplis de noir quand un soleil/une lune passe derrière.
+  Météo en `#B9C4D4` (gris de la température), santé dans ses couleurs.
+- Redessinées : neige (points), givre (traits et points), orage (éclair avec
+  liseré noir), inconnu (point d'interrogation dans un cercle), pas
+  (empreintes). Formes inspirées de Lucide (licence ISC), comme les originaux.
+- À vérifier : rendu des SVG par le compilateur Garmin (`transform`, arcs)
+  sur la montre.
+
 ## Chantiers suivants
 - **Indicateurs configurables** (gros chantier) : choisir les trois
   indicateurs (aujourd'hui FC, Body Battery, pas) parmi stress, calories,
