@@ -162,8 +162,10 @@ choix suivant à chaque appui. Mêmes propriétés et libellés que
 - `Weather.getSunrise`/`getSunset` et la permission `Positioning` retirés.
 - Trace temporaire réduite : `DBG now=… rise=… set=…` (secondes), à retirer
   après validation sur la montre.
-- Limite connue : si le coucher tombe après minuit (hautes latitudes en été),
-  le test `now < lever || now >= coucher` est faux. Rare en France.
+- Coucher « avant » le lever (coucher après minuit aux hautes latitudes, ou
+  valeurs du simulateur) : le jour est l'intervalle lever → coucher en
+  passant minuit. Le simulateur 9.2 renvoie des heures décalées (lever 20:29,
+  coucher 07:41 pour sa position par défaut) : validation sur la montre seulement.
 
 ## Chantier 8 : traduction (17/10/2026)
 

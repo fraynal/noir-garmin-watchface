@@ -250,7 +250,9 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         if (sunrise == null || sunset == null) {
             return clock.hour < 7 || clock.hour >= 19;
         }
-        return now < sunrise || now >= sunset;
+        // Jour = du lever au coucher, en passant minuit si le coucher est « avant » le lever.
+        var isDay = sunrise <= sunset ? (now >= sunrise && now < sunset) : (now >= sunrise || now < sunset);
+        return !isDay;
     }
 
     // Heures de sommeil du profil utilisateur (Garmin Connect > profil > sommeil).
