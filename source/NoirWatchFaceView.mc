@@ -20,6 +20,9 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
     var mHeartRateText = "--";
     var mBodyBatteryText = "--";
 
+    // Vrai pendant la veille (écran toujours allumé, mode basse consommation).
+    var mSleeping = false;
+
     function initialize() {
         WatchFace.initialize();
         // Charger une seule fois les ressources (pas dans onUpdate).
@@ -89,6 +92,19 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         } else if (id.equals(mBodyBatteryId)) {
             mBodyBatteryText = readComplicationText(mBodyBatteryId);
         }
+        // En veille, les mesures de santé ne sont pas affichées : pas de redessin.
+        if (!mSleeping) {
+            WatchUi.requestUpdate();
+        }
+    }
+
+    function onEnterSleep() as Void {
+        mSleeping = true;
+        WatchUi.requestUpdate();
+    }
+
+    function onExitSleep() as Void {
+        mSleeping = false;
         WatchUi.requestUpdate();
     }
 
@@ -118,6 +134,11 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         dc.clear();
 
         var clock = System.getClockTime();
+
+        if (mSleeping) {
+            drawSleep(dc, w, h, s, clock);
+            return;
+        }
 
         // MÉTÉO : icône + température, centrées au-dessus de la date.
         // Jour/nuit selon le lever/coucher réel du soleil à la position
@@ -164,14 +185,9 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         dc.drawText(startX + iconW + gap, weatherY, weatherFont, weatherText,
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
 
-        // DATE : Garmin renvoie directement les abréviations dans
-        // la langue configurée sur la montre (FORMAT_MEDIUM).
-        var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
-        var dateText = today.day_of_week.toString().toUpper()
-            + " " + today.day.toString()
-            + " " + today.month.toString().toUpper();
+        // DATE
         dc.setColor(gray, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, (h * 0.23).toNumber(), Graphics.FONT_SMALL, dateText,
+        dc.drawText(cx, (h * 0.23).toNumber(), Graphics.FONT_SMALL, dateText(),
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
 
         // HEURE
@@ -200,7 +216,44 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         drawValue(dc, cx + spacing, valueY, stepsText, white);
 
         // BATTERIE MONTRE
-        drawBattery(dc, cx, (h * 0.85).toNumber(), System.getSystemStats().battery, s);
+        drawBattery(dc, cx, (h * 0.85).toNumber(), System.getSystemStats().battery, s,
+            gray, Graphics.FONT_SMALL);
+    }
+
+    // VEILLE : date, heure et batterie en gris, sans météo ni mesures de santé.
+    // Le système ne redessine qu'une fois par minute. Tout l'affichage se décale
+    // chaque minute sur une grille 5×5 (±2 pas de 2 px, soit ±4 px) pour limiter le marquage AMOLED.
+    // L'heure est au centre du cadran ; date au-dessus et batterie en dessous,
+    // placées par rapport à l'heure, en hauteurs de sa police (les chiffres
+    // n'occupent qu'environ la moitié de cette hauteur sur la fenix 9).
+    // Réglage visuel : SLEEP_DATE_OFFSET / SLEEP_BATTERY_OFFSET.
+    const SLEEP_DATE_OFFSET = 1.0;
+    const SLEEP_BATTERY_OFFSET = 1.15;
+
+    function drawSleep(dc, w, h, s, clock) {
+        var step = (2 * s).toNumber();
+        var cx = w / 2 + (clock.min % 5 - 2) * step;
+        var timeY = h / 2 + (clock.min / 5 % 5 - 2) * step;
+        var timeFont = Graphics.FONT_NUMBER_MILD;
+        var timeH = dc.getFontHeight(timeFont);
+        dc.setColor(0x71787F, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(cx, (timeY - timeH * SLEEP_DATE_OFFSET).toNumber(), Graphics.FONT_XTINY, dateText(),
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.setColor(0x9A9FA7, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(cx, timeY, timeFont,
+            clock.hour.format("%02d") + ":" + clock.min.format("%02d"),
+            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        drawBattery(dc, cx, (timeY + timeH * SLEEP_BATTERY_OFFSET).toNumber(),
+            System.getSystemStats().battery, s, 0x71787F, Graphics.FONT_XTINY);
+    }
+
+    // Garmin renvoie directement les abréviations dans
+    // la langue configurée sur la montre (FORMAT_MEDIUM).
+    function dateText() {
+        var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+        return today.day_of_week.toString().toUpper()
+            + " " + today.day.toString()
+            + " " + today.month.toString().toUpper();
     }
 
     // DEBUG temporaire : heure locale d'un Moment.
@@ -296,8 +349,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
     }
 
     // Icône batterie dessinée : corps + ergot, tailles à l'échelle s de l'écran.
-    function drawBattery(dc, cx, y, percent, s) {
-        var color = 0xB9C4D4;
+    function drawBattery(dc, cx, y, percent, s, color, font) {
         var bodyW = (25 * s).toNumber();
         var iconH = (14 * s).toNumber();
         var pad = (3 * s).toNumber();
@@ -306,7 +358,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         var iconW = bodyW + pad / 3 + nubW;
         var gap = (7 * s).toNumber();
         var label = percent.format("%.0f") + "%";
-        var textW = dc.getTextWidthInPixels(label, Graphics.FONT_SMALL);
+        var textW = dc.getTextWidthInPixels(label, font);
         var totalW = iconW + gap + textW;
         var x = (cx - totalW / 2).toNumber();
         var top = (y - iconH / 2).toNumber();
@@ -317,7 +369,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         if (fillW > 0) {
             dc.fillRectangle(x + pad, top + pad, fillW, iconH - 2 * pad);
         }
-        dc.drawText(x + iconW + gap, y, Graphics.FONT_SMALL, label,
+        dc.drawText(x + iconW + gap, y, font, label,
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
     }
 

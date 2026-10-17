@@ -64,8 +64,33 @@ probable du simulateur, **non confirmé sur la montre**.
   des images par résolution.
 - Les polices sont propres à chaque montre : vérifier les chevauchements.
 
+## Chantier 3 : écran de veille (17/10/2026)
+
+Définition : `veille.png` (maquette sur fond noir : seuls les rapports de
+taille et d'écart entre les éléments comptent, pas leur place à l'écran).
+
+### Fait
+- `onEnterSleep` / `onExitSleep` basculent `mSleeping` ; en veille,
+  `onUpdate` appelle `drawSleep` : date, heure, batterie uniquement
+  (ni météo ni mesures de santé). Le système redessine une fois par minute ;
+  un changement de FC / Body Battery ne déclenche plus de redessin en veille.
+- Deux gris : heure `#9A9FA7`, date et batterie `#71787F`.
+  Polices : heure `FONT_NUMBER_MILD`, date et batterie `FONT_XTINY`.
+- Heure au centre du cadran ; date au-dessus et batterie en dessous,
+  centrées sur l'heure. Écarts en hauteurs de police de l'heure :
+  `SLEEP_DATE_OFFSET = 1.0`, `SLEEP_BATTERY_OFFSET = 1.15`
+  (calés sur la maquette d'après une capture du simulateur).
+- Anti-marquage AMOLED : le bloc se décale chaque minute sur une grille 5×5,
+  pas de 2 px (±4 px), horizontalement chaque minute, verticalement toutes
+  les 5 minutes.
+- Luminance mesurée dans le simulateur (Screen Heat Map) : **2,36 %**
+  (limite Garmin : 10 %).
+
+### Tester
+- Simulateur : *Display Mode* > *Always-On* (ou *Sleep Event*) ;
+  *File > View Screen Heat Map* > *Start* pour la luminance sur 24 h.
+- Montre : activer l'écran toujours allumé, baisser le poignet.
+
 ## Chantiers suivants
-- **Mode veille** : pas de `onPartialUpdate` ni d'affichage spécifique
-  au mode veille.
 - **Icône du lanceur** : 24×24 alors que la fenix 9 attend 65×65
   (agrandie automatiquement, avertissement du compilateur).
