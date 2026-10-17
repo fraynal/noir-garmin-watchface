@@ -24,7 +24,12 @@ class NoirWatchFaceApp extends Application.AppBase {
         return [ mView ];
     }
 
-    // Réglages modifiés depuis Garmin Connect sur le téléphone.
+    // Menu de réglages sur la montre (cadran > personnaliser).
+    function getSettingsView() as [Views] or [Views, InputDelegates] or Null {
+        return [new NoirSettingsMenu(), new NoirSettingsDelegate()];
+    }
+
+    // Réglages modifiés depuis Garmin Connect ou le menu de la montre.
     function onSettingsChanged() as Void {
         if (mView != null) {
             mView.loadSettings();

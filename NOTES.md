@@ -137,6 +137,20 @@ centre optique (47 %), santé (icônes 66 %, valeurs 73,5 % en gris clair
 - À vérifier : rendu des SVG par le compilateur Garmin (`transform`, arcs)
   sur la montre.
 
+## Chantier 6 : réglages sur la montre (17/10/2026)
+
+Les réglages Garmin Connect ne sont pas disponibles pour un cadran installé
+par USB. `getSettingsView` (NoirWatchFaceApp) fournit un menu `Menu2`
+(`source/NoirWatchFaceSettings.mc`) : interrupteurs pour secondes, météo,
+% batterie ; lignes à 3 choix (format de l'heure, unité) qui passent au
+choix suivant à chaque appui. Mêmes propriétés et libellés que
+`resources/settings` ; chaque changement appelle `onSettingsChanged`.
+
+- Montre : maintenir MENU > Cadran de montre > NoirWatchFace > Personnaliser.
+- Simulateur : *Trigger App Settings*.
+- La doc du SDK ne liste pas la fenix 9 (listes arrêtées à la fenix 8) :
+  à confirmer sur la montre.
+
 ## Chantiers suivants
 - **Indicateurs configurables** (gros chantier) : choisir les trois
   indicateurs (aujourd'hui FC, Body Battery, pas) parmi stress, calories,
