@@ -190,11 +190,18 @@ Affichés seulement quand l'état est actif (réglage `ShowStatusIcons`, oui par
 - Non retenus : notifications (cloche), alarme réglée (presque toujours active).
   Les modes de concentration ne sont pas accessibles aux cadrans.
 
+## Chantier 10 : icône du lanceur (17/10/2026)
+
+`resources/drawables/launcher_icon.svg` en 65×65 (taille attendue par la
+fenix 9) : miniature du cadran (disque noir, date grise, heure 10:08 en
+blanc, trois points aux couleurs des indicateurs). Chiffres dessinés en
+tracés, sans texte SVG. Ancienne icône du modèle Garmin :
+`design/launcher_icon-original.svg`. Plus d'avertissement à la compilation.
+
 ## Chantiers suivants
-- **Indicateurs configurables** (gros chantier) : choisir les trois
+- **Publication sur le Connect IQ Store** (prochain).
+- **Indicateurs configurables** (gros chantier, après la publication) : choisir les trois
   indicateurs (aujourd'hui FC, Body Battery, pas) parmi stress, calories,
   étages, distance, minutes d'intensité… via les complications Garmin.
   Demande une liste de choix par emplacement, une icône et un format de valeur
   pour chaque donnée.
-- **Icône du lanceur** : 24×24 alors que la fenix 9 attend 65×65
-  (agrandie automatiquement, avertissement du compilateur).
