@@ -223,6 +223,25 @@ tracés, sans texte SVG. Ancienne icône du modèle Garmin :
   nuit, donc sans information) ; conservée sur l'écran actif.
 - Pic de luminance mesuré au simulateur : 2,32 % (limite 10 %).
 
+## Chantier 13 : séparation Noir / Noir Pro (17/10/2026)
+
+Un seul code, deux builds :
+| | Noir | Noir Pro |
+|---|---|---|
+| Build | `monkey.jungle` | `monkey-pro.jungle` |
+| Manifest | `manifest.xml` (id `9aa262c0-…`) | `manifest-pro.xml` (id `1dcf482e-…`) |
+| Nom | `@Strings.AppName` = « Noir » | `@Strings.AppNamePro` = « Noir Pro » |
+| Ressources | `resources` | `resources` + `resources-pro` (réglages) |
+| Code exclu | marqué `(:pro)` | marqué `(:free)` |
+
+- Marqué `(:pro)` : `getSettingsView`, le menu (`NoirSettingsMenu`,
+  `NoirSettingsDelegate`, `choiceLabel`), `loadSettings` qui lit les
+  propriétés. `(:free)` : `loadSettings` vide (valeurs par défaut).
+- Les deux manifests doivent garder la même liste de montres et de permissions.
+- Compilation : `monkeyc -f monkey.jungle -o bin/Noir.prg …` et
+  `monkeyc -f monkey-pro.jungle -o bin/NoirPro.prg …`. Les 15 montres
+  compilent pour les deux versions.
+
 ## Feuille de route (décidée le 17/10/2026)
 
 ### Deux versions, un seul code
@@ -263,7 +282,7 @@ pour la Pro (exclusion de code dans `monkey.jungle`). Prix Pro : à décider
 ### Ordre
 1. ~~Écran du mode sommeil~~ (fait, chantier 11).
 2. ~~Veille lisible~~ (fait, chantier 12).
-3. Séparation Noir / Noir Pro, retrait de la trace DBG, publication de Noir.
+3. ~~Séparation Noir / Noir Pro~~ (fait, chantier 13) ; retrait de la trace DBG, publication de Noir.
 4. Indicateurs configurables, puis mode Auto ; publication de Noir Pro.
 
 ## Chantiers suivants

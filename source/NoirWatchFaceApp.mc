@@ -24,7 +24,8 @@ class NoirWatchFaceApp extends Application.AppBase {
         return [ mView ];
     }
 
-    // Menu de réglages sur la montre (cadran > personnaliser).
+    // Menu de réglages sur la montre (cadran > personnaliser). Noir Pro seulement.
+    (:pro)
     function getSettingsView() as [Views] or [Views, InputDelegates] or Null {
         return [new NoirSettingsMenu(), new NoirSettingsDelegate()];
     }

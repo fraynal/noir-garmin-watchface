@@ -66,6 +66,13 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         ];
     }
 
+    // Noir : pas de réglages, les valeurs par défaut ci-dessus s'appliquent.
+    (:free)
+    function loadSettings() as Void {
+    }
+
+    // Noir Pro : réglages de resources-pro/settings.
+    (:pro)
     function loadSettings() as Void {
         mShowSeconds = Properties.getValue("ShowSeconds");
         mTemperatureUnit = Properties.getValue("TemperatureUnit");

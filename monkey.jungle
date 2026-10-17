@@ -1,1 +1,3 @@
+# Noir (gratuite) : sans réglages. Le code marqué (:pro) est exclu.
 project.manifest = manifest.xml
+base.excludeAnnotations = pro
