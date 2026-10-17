@@ -1,0 +1,20 @@
+<resources>
+    <bitmap id="heart" filename="../images/heart.png" />
+    <bitmap id="bolt" filename="../images/bolt.png" />
+    <bitmap id="steps" filename="../images/steps.png" />
+    <bitmap id="weather_sun" filename="../images/weather_sun.png" />
+    <bitmap id="weather_moon" filename="../images/weather_moon.png" />
+    <bitmap id="weather_partly_day" filename="../images/weather_partly_day.png" />
+    <bitmap id="weather_partly_night" filename="../images/weather_partly_night.png" />
+    <bitmap id="weather_cloud" filename="../images/weather_cloud.png" />
+    <bitmap id="weather_rain" filename="../images/weather_rain.png" />
+    <bitmap id="weather_showers" filename="../images/weather_showers.png" />
+    <bitmap id="weather_sun_rain" filename="../images/weather_sun_rain.png" />
+    <bitmap id="weather_moon_rain" filename="../images/weather_moon_rain.png" />
+    <bitmap id="weather_storm" filename="../images/weather_storm.png" />
+    <bitmap id="weather_snow" filename="../images/weather_snow.png" />
+    <bitmap id="weather_fog" filename="../images/weather_fog.png" />
+    <bitmap id="weather_wind" filename="../images/weather_wind.png" />
+    <bitmap id="weather_ice" filename="../images/weather_ice.png" />
+    <bitmap id="weather_unknown" filename="../images/weather_unknown.png" />
+</resources>
