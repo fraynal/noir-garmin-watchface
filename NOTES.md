@@ -46,10 +46,25 @@ probable du simulateur, **non confirmé sur la montre**.
 - La console de débogage affiche une ligne `DBG cond=… loc=… now=… rise=… set=… night=…`.
 - La position du simulateur revient parfois à sa valeur par défaut (Kansas).
 
+## Chantier 2 : positions fixes (17/10/2026)
+
+### Fait
+- Taille des icônes lue sur les images (`getWidth()` / `getHeight()`) au lieu
+  de valeurs en dur. Ça corrige deux erreurs : cœur, éclair et pas (24 px)
+  étaient centrés comme des images de 30 px (décalés de 3 px), et l'icône
+  météo comptait 29 px au lieu de 30.
+- Marges et batterie dessinée multipliées par un facteur d'échelle
+  `s = largeur / 454` (fenix 9 Pro 47 mm = 1.0, donc rendu inchangé à part
+  le centrage corrigé).
+- Positions verticales et horizontales : déjà en proportion de l'écran.
+
+### Reste à faire à l'ajout d'une autre montre
+- Les images gardent leur taille en pixels : les adapter dans le fichier de
+  ressources (`scaleX` / `scaleY` avec `scaleRelativeTo="screen"`) ou fournir
+  des images par résolution.
+- Les polices sont propres à chaque montre : vérifier les chevauchements.
+
 ## Chantiers suivants
-- **Positions à l'écran** : tailles et décalages en pixels codés en dur
-  (`iconW = 29`, icônes de 30 px…), valables pour une seule montre ciblée.
-  À rendre proportionnels avant d'ajouter d'autres montres.
 - **Mode veille** : pas de `onPartialUpdate` ni d'affichage spécifique
   au mode veille.
 - **Icône du lanceur** : 24×24 alors que la fenix 9 attend 65×65

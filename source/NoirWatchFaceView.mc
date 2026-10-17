@@ -109,6 +109,8 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         var w = dc.getWidth();
         var h = dc.getHeight();
         var cx = (w / 2).toNumber();
+        // Échelle des tailles en pixels : 1.0 sur l'écran de référence 454 px (fenix 9 Pro 47 mm).
+        var s = w / 454.0;
         var white = 0xF2F4F7;
         var gray = 0xB9C4D4;
 
@@ -152,11 +154,12 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         var weatherY = (h * 0.105).toNumber();
         var weatherFont = Graphics.FONT_SMALL;
         var textW = dc.getTextWidthInPixels(weatherText, weatherFont);
-        var iconW = 29;
-        var gap = 7;
+        var iconW = weatherIcon.getWidth();
+        var gap = (7 * s).toNumber();
         var groupW = iconW + gap + textW;
         var startX = (cx - groupW / 2).toNumber();
-        dc.drawBitmap(startX, weatherY - 10, weatherIcon);
+        // Calage visuel : le centre de l'icône est 1/6 de sa hauteur sous le centre du texte.
+        dc.drawBitmap(startX, weatherY - weatherIcon.getHeight() / 3, weatherIcon);
         dc.setColor(gray, Graphics.COLOR_TRANSPARENT);
         dc.drawText(startX + iconW + gap, weatherY, weatherFont, weatherText,
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
@@ -189,15 +192,15 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         var spacing = (w * 0.255).toNumber();
         var iconY = (h * 0.61).toNumber();
         var valueY = (h * 0.70).toNumber();
-        drawCenteredIcon(dc, cx - spacing, iconY, mHeart, 30);
+        drawCenteredIcon(dc, cx - spacing, iconY, mHeart);
         drawValue(dc, cx - spacing, valueY, mHeartRateText, white);
-        drawCenteredIcon(dc, cx, iconY, mBolt, 30);
+        drawCenteredIcon(dc, cx, iconY, mBolt);
         drawValue(dc, cx, valueY, mBodyBatteryText, white);
-        drawCenteredIcon(dc, cx + spacing, iconY, mSteps, 30);
+        drawCenteredIcon(dc, cx + spacing, iconY, mSteps);
         drawValue(dc, cx + spacing, valueY, stepsText, white);
 
         // BATTERIE MONTRE
-        drawBattery(dc, cx, (h * 0.85).toNumber(), System.getSystemStats().battery);
+        drawBattery(dc, cx, (h * 0.85).toNumber(), System.getSystemStats().battery, s);
     }
 
     // DEBUG temporaire : heure locale d'un Moment.
@@ -209,8 +212,8 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         return i.day + "/" + i.month + " " + i.hour.format("%02d") + ":" + i.min.format("%02d");
     }
 
-    function drawCenteredIcon(dc, x, y, bitmap, size) {
-        dc.drawBitmap((x - size / 2).toNumber(), (y - size / 2).toNumber(), bitmap);
+    function drawCenteredIcon(dc, x, y, bitmap) {
+        dc.drawBitmap(x - bitmap.getWidth() / 2, y - bitmap.getHeight() / 2, bitmap);
     }
 
     function drawValue(dc, x, y, value, color) {
@@ -292,22 +295,27 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         return 14;
     }
 
-    function drawBattery(dc, cx, y, percent) {
+    // Icône batterie dessinée : corps + ergot, tailles à l'échelle s de l'écran.
+    function drawBattery(dc, cx, y, percent, s) {
         var color = 0xB9C4D4;
-        var iconW = 28;
-        var iconH = 14;
-        var gap = 7;
+        var bodyW = (25 * s).toNumber();
+        var iconH = (14 * s).toNumber();
+        var pad = (3 * s).toNumber();
+        var nubW = (2 * s).toNumber();
+        var nubH = (4 * s).toNumber();
+        var iconW = bodyW + pad / 3 + nubW;
+        var gap = (7 * s).toNumber();
         var label = percent.format("%.0f") + "%";
         var textW = dc.getTextWidthInPixels(label, Graphics.FONT_SMALL);
         var totalW = iconW + gap + textW;
         var x = (cx - totalW / 2).toNumber();
         var top = (y - iconH / 2).toNumber();
         dc.setColor(color, Graphics.COLOR_TRANSPARENT);
-        dc.drawRoundedRectangle(x, top, 25, iconH, 3);
-        dc.fillRectangle(x + 26, top + 5, 2, 4);
-        var fillW = (19 * percent / 100.0).toNumber();
+        dc.drawRoundedRectangle(x, top, bodyW, iconH, pad);
+        dc.fillRectangle(x + bodyW + pad / 3, top + (iconH - nubH) / 2, nubW, nubH);
+        var fillW = ((bodyW - 2 * pad) * percent / 100.0).toNumber();
         if (fillW > 0) {
-            dc.fillRectangle(x + 3, top + 3, fillW, 8);
+            dc.fillRectangle(x + pad, top + pad, fillW, iconH - 2 * pad);
         }
         dc.drawText(x + iconW + gap, y, Graphics.FONT_SMALL, label,
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
