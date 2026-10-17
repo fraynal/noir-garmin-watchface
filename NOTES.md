@@ -198,8 +198,50 @@ blanc, trois points aux couleurs des indicateurs). Chiffres dessinés en
 tracés, sans texte SVG. Ancienne icône du modèle Garmin :
 `design/launcher_icon-original.svg`. Plus d'avertissement à la compilation.
 
+## Feuille de route (décidée le 17/10/2026)
+
+### Deux versions, un seul code
+| | **Noir** (gratuite) | **Noir Pro** (payante) |
+|---|---|---|
+| Mise en page, veille AMOLED, icônes | ✓ | ✓ |
+| 12/24 h, °C/°F | suit la montre | suit la montre ou forcé |
+| Météo, % batterie, indicateurs d'état | toujours affichés | affichables ou masqués |
+| Secondes | non | en option |
+| 3 indicateurs | fixes (FC, Body Battery, pas) | au choix + mode Auto contextuel |
+| Réglages (montre, Garmin Connect) | aucun | tous |
+| Montres | identiques | identiques |
+
+Deux apps sur le Store (identifiants distincts), réglages compilés seulement
+pour la Pro (exclusion de code dans `monkey.jungle`). Prix Pro : à décider
+(marché : 2–5 $, achat unique ; paiement Garmin Pay dans le Store).
+
+### Montres
+- Vague 1 : AMOLED rond 454/466 px (15 profils dans le manifest, API min. 4.2.0) :
+  fenix 9 Pro 47/51, fenix 9, fenix 8 47/51, fenix 8 Pro, epix Pro 51,
+  D2 Mach 2 / 2 Pro, MARQ 3, FR 965/970/570 47, Venu 3, Venu 4 45, Approach S72 47.
+  Toutes compilent ; affichage à vérifier au simulateur.
+- Vague 2 : 416/390 px (~25 montres) : icônes à redimensionner par résolution.
+- Écrans MIP : non (design pensé pour l'AMOLED).
+
+### Fonctions phares (étude du 17/10/2026)
+- **Veille lisible** (Noir gratuite) : plainte n° 1 des utilisateurs AMOLED,
+  l'heure illisible en veille (Garmin assombrit l'écran, « by design »). Un trait
+  fin éclaire trop peu de pixels : chiffres pleins, grands, plus clairs, sous la
+  limite de 10 % (on est à 2,36 %), avec le décalage anti-marquage.
+- **Indicateurs contextuels « Auto »** (Noir Pro) : les 3 emplacements changent
+  selon le moment (réveil : sommeil, Body Battery, récupération ; journée : pas,
+  stress ; après activité : récupération ; soir : Body Battery). Esprit Smart
+  Stack d'Apple ; aucun cadran Connect IQ équivalent trouvé.
+- Écartés : thèmes de couleurs, jauges de progression, données en masse
+  (déjà partout, contraire à l'identité de Noir).
+
+### Ordre
+1. Écran du mode sommeil (même rendu que la veille).
+2. Veille lisible.
+3. Séparation Noir / Noir Pro, retrait de la trace DBG, publication de Noir.
+4. Indicateurs configurables, puis mode Auto ; publication de Noir Pro.
+
 ## Chantiers suivants
-- **Publication sur le Connect IQ Store** (prochain).
 - **Indicateurs configurables** (gros chantier, après la publication) : choisir les trois
   indicateurs (aujourd'hui FC, Body Battery, pas) parmi stress, calories,
   étages, distance, minutes d'intensité… via les complications Garmin.
