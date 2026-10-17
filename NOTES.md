@@ -160,8 +160,7 @@ choix suivant à chaque appui. Mêmes propriétés et libellés que
   Comparaison sur l'heure de la journée seulement : plus de décalage de date
   ni de fuseau. Repli sur 7h–19h si indisponibles.
 - `Weather.getSunrise`/`getSunset` et la permission `Positioning` retirés.
-- Trace temporaire réduite : `DBG now=… rise=… set=…` (secondes), à retirer
-  après validation sur la montre.
+- Validé sur la montre le 18/10/2026 ; trace `DBG` retirée.
 - Coucher « avant » le lever (coucher après minuit aux hautes latitudes, ou
   valeurs du simulateur) : le jour est l'intervalle lever → coucher en
   passant minuit. Le simulateur 9.2 renvoie des heures décalées (lever 20:29,
@@ -282,7 +281,7 @@ pour la Pro (exclusion de code dans `monkey.jungle`). Prix Pro : à décider
 ### Ordre
 1. ~~Écran du mode sommeil~~ (fait, chantier 11).
 2. ~~Veille lisible~~ (fait, chantier 12).
-3. ~~Séparation Noir / Noir Pro~~ (fait, chantier 13) ; retrait de la trace DBG, publication de Noir.
+3. ~~Séparation Noir / Noir Pro~~ (fait, chantier 13) ; ~~retrait de la trace DBG~~ ; publication de Noir (fiche : `store/noir.md`).
 4. Indicateurs configurables, puis mode Auto ; publication de Noir Pro.
 
 ## Chantiers suivants

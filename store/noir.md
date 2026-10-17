@@ -83,7 +83,7 @@ possible (à confirmer selon ce qu'accepte le portail).
 
 ## Avant l'envoi
 
-- [ ] Retirer la trace `DBG` (après validation du jour/nuit sur la montre)
+- [x] Retirer la trace `DBG`
 - [ ] Vérifier le nom « Noir » sur le Store
 - [ ] Captures d'écran
 - [ ] Paquet `.iq` : `monkeyc -e -r -f monkey.jungle -o store/Noir.iq -y <clé>`

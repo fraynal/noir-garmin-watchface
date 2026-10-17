@@ -252,8 +252,6 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         var sunrise = readComplicationValue(Complications.COMPLICATION_TYPE_SUNRISE);
         var sunset = readComplicationValue(Complications.COMPLICATION_TYPE_SUNSET);
         var now = clock.hour * 3600 + clock.min * 60 + clock.sec;
-        // DEBUG temporaire : validation jour/nuit sur la montre.
-        System.println("DBG now=" + now + " rise=" + sunrise + " set=" + sunset);
         if (sunrise == null || sunset == null) {
             return clock.hour < 7 || clock.hour >= 19;
         }
