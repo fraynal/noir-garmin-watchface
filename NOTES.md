@@ -183,7 +183,9 @@ Affichés seulement quand l'état est actif (réglage `ShowStatusIcons`, oui par
 - **Ne pas déranger** (`doNotDisturb`) : lune mauve pleine (`#B9A2D8`,
   24 px, cadre resserré sur le croissant pour le centrer) à 12 px à gauche de
   la batterie, qui reste centrée (`drawBattery` renvoie sa position gauche).
-  Pleine pour se distinguer de la lune météo (contour gris).
+  Pleine pour se distinguer de la lune météo (contour gris). Dessin propre
+  (vrai croissant : disque r=9 moins disque r=8,5 décalé de 4) : la lune météo
+  remplie donnait un disque échancré.
 - En veille : mêmes icônes en version atténuée (`*_dim`), décalées avec le reste.
 - Non retenus : notifications (cloche), alarme réglée (presque toujours active).
   Les modes de concentration ne sont pas accessibles aux cadrans.
