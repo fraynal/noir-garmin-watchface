@@ -234,7 +234,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
             drawCenteredIcon(dc, phoneX, phoneY, phoneOff);
         }
         if (settings.doNotDisturb) {
-            drawCenteredIcon(dc, batteryX - (8 * s).toNumber() - dnd.getWidth() / 2, batteryY, dnd);
+            drawCenteredIcon(dc, batteryX - (12 * s).toNumber() - dnd.getWidth() / 2, batteryY, dnd);
         }
     }
 

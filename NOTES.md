@@ -180,9 +180,10 @@ choix suivant à chaque appui. Mêmes propriétés et libellés que
 Affichés seulement quand l'état est actif (réglage `ShowStatusIcons`, oui par défaut) :
 - **Téléphone déconnecté** (`phoneConnected`) : téléphone barré à 9 h, à
   hauteur de l'heure (position fixe, `cx - 0.38 × largeur`). Rare, doit se voir.
-- **Ne pas déranger** (`doNotDisturb`) : lune mauve (`#B9A2D8`, même dessin
-  que la lune météo) à gauche de la batterie, qui reste centrée
-  (`drawBattery` renvoie sa position gauche).
+- **Ne pas déranger** (`doNotDisturb`) : lune mauve pleine (`#B9A2D8`,
+  24 px, cadre resserré sur le croissant pour le centrer) à 12 px à gauche de
+  la batterie, qui reste centrée (`drawBattery` renvoie sa position gauche).
+  Pleine pour se distinguer de la lune météo (contour gris).
 - En veille : mêmes icônes en version atténuée (`*_dim`), décalées avec le reste.
 - Non retenus : notifications (cloche), alarme réglée (presque toujours active).
   Les modes de concentration ne sont pas accessibles aux cadrans.
