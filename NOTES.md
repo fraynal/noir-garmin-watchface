@@ -241,6 +241,20 @@ Un seul code, deux builds :
   `monkeyc -f monkey-pro.jungle -o bin/NoirPro.prg …`. Les 15 montres
   compilent pour les deux versions.
 
+## Limite connue : icône système en haut de l'écran (18/10/2026)
+
+- Quand une app ou une activité tourne en arrière-plan (minuteur, chronomètre,
+  activité), la montre superpose son icône en haut au centre du cadran
+  (raccourci pour y revenir). Elle recouvre la ligne météo de Noir.
+- Le SDK ne permet ni de déplacer cette icône, ni de savoir qu'elle est
+  affichée (pas d'accès au minuteur ni au chronomètre). Garmin ne publie pas
+  la liste des icônes concernées.
+- Essais abandonnés : écarter l'icône météo et la température pour laisser un
+  vide au centre, puis les aligner sur le jour et le mois de la date. Rendu
+  jugé trop laid pour un cas rare.
+- Décision : on accepte la superposition (minuteur et chrono rares). À revoir
+  si Garmin fournit une API pour détecter ou placer cette icône.
+
 ## Feuille de route (décidée le 17/10/2026)
 
 ### Deux versions, un seul code
