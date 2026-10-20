@@ -2,7 +2,7 @@
 
 A large, centered time with only what matters around it: weather, date, heart rate, Body Battery, steps and watch battery. Everything else stays black.
 
-Noir is a free [Connect IQ](https://developer.garmin.com/connect-iq/) watch face for AMOLED Garmin watches, written in Monkey C.
+Noir is a free [Connect IQ](https://developer.garmin.com/connect-iq/) watch face for AMOLED Garmin watches, written in Monkey C. It is a personal open-source project, still in development: feedback and [contributions](#contributing) are welcome.
 
 ## Features
 

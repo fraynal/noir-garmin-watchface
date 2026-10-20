@@ -7,7 +7,7 @@ de longueur et les champs exacts : ils ne sont pas documentés dans le SDK.
 - **Type** : Watch face
 - **Prix** : gratuit
 - **Langues de la fiche** : anglais (par défaut), français
-- **Code source** : https://github.com/fraynal/noir-garmin-watchface (GPL-3.0), à ajouter en fin de description une fois publié
+- **Code source** : https://github.com/fraynal/noir-garmin-watchface (GPL-3.0), cité dans la description
 
 ---
 
@@ -45,7 +45,7 @@ Settings are available in English and French.
 
 Noir collects no data and sends nothing.
 
-Tested on fēnix 9 Pro 47 mm. On other watches, please report any display issue on GitHub (link below): your feedback helps.
+**An open-source project in development.** Noir has been tested on fēnix 9 Pro 47 mm only. Feedback from other watches, bug reports and contributions are welcome on GitHub: https://github.com/fraynal/noir-garmin-watchface
 
 ### What's new (1.0.0)
 
@@ -87,7 +87,7 @@ Réglages disponibles en anglais et en français.
 
 Noir ne collecte aucune donnée et n'envoie rien.
 
-Testé sur fēnix 9 Pro 47 mm. Sur une autre montre, signalez tout problème d'affichage sur GitHub (lien ci-dessous) : votre retour aide.
+**Un projet open source en développement.** Noir n'a été testé que sur fēnix 9 Pro 47 mm. Retours sur d'autres montres, signalements de bugs et contributions sont les bienvenus sur GitHub : https://github.com/fraynal/noir-garmin-watchface
 
 ### Nouveautés (1.0.0)
 
