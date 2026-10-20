@@ -95,23 +95,22 @@ Première version.
 
 ---
 
-## Captures d'écran à faire (simulateur, fenix 9 Pro 47 mm)
+## Captures d'écran
 
-1. **Écran actif, jour** : ciel dégagé (soleil), vers 14:00, valeurs de santé renseignées.
-2. **Écran actif, nuit** : ciel dégagé (lune), vers 21:00.
-3. **Veille** : *Display Mode > Always-On*, même heure que 2.
-4. **Indicateurs d'état** : téléphone déconnecté et Ne pas déranger actifs.
-5. **Réglages** : menu sur la montre (*Trigger App Settings* au simulateur).
-6. Optionnel : une autre montre (Venu 3 ou Forerunner 965), pour montrer la compatibilité.
+Dans `docs/screenshots/` (écran seul, 908 × 908 px, fond noir, simulateur fēnix 9 Pro 47 mm) :
 
-Format : captures de l'écran seul, fond noir, sans le boîtier du simulateur si
-possible (à confirmer selon ce qu'accepte le portail).
+1. `day.png` : écran actif de jour (soleil, 14:55).
+2. `evening.png` : écran actif le soir (lune derrière un nuage, 21:41).
+3. `night.png` : écran de nuit, pendant les heures de sommeil (21:42).
+4. `settings.png` : menu des réglages sur la montre.
+
+Originaux avec la fenêtre du simulateur : `docs/noir-*.png` (non versionnés).
 
 ## Avant l'envoi
 
 - [x] Retirer la trace `DBG`
 - [ ] Vérifier le nom « Noir » sur le Store
-- [ ] Captures d'écran
+- [x] Captures d'écran
 - [x] Paquet `.iq` : `monkeyc -e -r -f monkey.jungle -o store/Noir.iq -y <clé>`
 - [ ] Sauvegarder la clé développeur (hors du dépôt, jamais sur GitHub) :
       toutes les mises à jour devront être signées avec la même clé

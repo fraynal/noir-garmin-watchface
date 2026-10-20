@@ -2,6 +2,14 @@
 
 A large, centered time with only what matters around it: weather, date, heart rate, Body Battery, steps and watch battery. Everything else stays black.
 
+<p align="center">
+  <img src="docs/screenshots/day.png" width="200" alt="Day">
+  <img src="docs/screenshots/evening.png" width="200" alt="Evening">
+  <img src="docs/screenshots/night.png" width="200" alt="Night screen">
+  <img src="docs/screenshots/settings.png" width="200" alt="Settings">
+</p>
+<p align="center"><em>Day · Evening · Night screen · Settings (simulator, fēnix 9 Pro 47 mm)</em></p>
+
 Noir is a free [Connect IQ](https://developer.garmin.com/connect-iq/) watch face for AMOLED Garmin watches, written in Monkey C. It is a personal open-source project, still in development: feedback and [contributions](#contributing) are welcome.
 
 ## Features
