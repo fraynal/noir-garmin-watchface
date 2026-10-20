@@ -115,6 +115,15 @@ Dans `docs/screenshots/` (écran seul, 908 × 908 px, fond noir, simulateur fēn
 
 Originaux avec la fenêtre du simulateur : `docs/noir-*.png` (non versionnés).
 
+## Image de présentation (hero image)
+
+Le portail exige **1440 × 720 px**. Dans `docs/store-images/` :
+- `hero-en.png` (anglais) et `hero-fr.png` (français) : nom, accroche, écrans
+  de jour et de nuit.
+- Générées par `python3 design/hero.py docs/screenshots docs/store-images/hero-en.png en`
+  (ou `fr`) : à relancer si les captures changent.
+- Les captures sont en anglais (date `TUE 20 OCT`), y compris sur l'image française.
+
 ## Avant l'envoi
 
 - [x] Retirer la trace `DBG`
