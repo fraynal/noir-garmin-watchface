@@ -1,4 +1,4 @@
-# NoirWatchFace — notes de chantier
+# Noir — notes de chantier
 
 ## Chantier 1 : jour/nuit météo, complications, dépôt (17/10/2026)
 
@@ -222,27 +222,6 @@ tracés, sans texte SVG. Ancienne icône du modèle Garmin :
   nuit, donc sans information) ; conservée sur l'écran actif.
 - Pic de luminance mesuré au simulateur : 2,32 % (limite 10 %).
 
-## Chantier 13 : séparation Noir / Noir Pro (17/10/2026) — abandonnée
-
-> Annulée le 20/10/2026 (chantier 14) : une seule app gratuite. Conservé pour l'historique.
-
-Un seul code, deux builds :
-| | Noir | Noir Pro |
-|---|---|---|
-| Build | `monkey.jungle` | `monkey-pro.jungle` |
-| Manifest | `manifest.xml` (id `9aa262c0-…`) | `manifest-pro.xml` (id `1dcf482e-…`) |
-| Nom | `@Strings.AppName` = « Noir » | `@Strings.AppNamePro` = « Noir Pro » |
-| Ressources | `resources` | `resources` + `resources-pro` (réglages) |
-| Code exclu | marqué `(:pro)` | marqué `(:free)` |
-
-- Marqué `(:pro)` : `getSettingsView`, le menu (`NoirSettingsMenu`,
-  `NoirSettingsDelegate`, `choiceLabel`), `loadSettings` qui lit les
-  propriétés. `(:free)` : `loadSettings` vide (valeurs par défaut).
-- Les deux manifests doivent garder la même liste de montres et de permissions.
-- Compilation : `monkeyc -f monkey.jungle -o bin/Noir.prg …` et
-  `monkeyc -f monkey-pro.jungle -o bin/NoirPro.prg …`. Les 15 montres
-  compilent pour les deux versions.
-
 ## Limite connue : icône système en haut de l'écran (18/10/2026)
 
 - Quand une app ou une activité tourne en arrière-plan (minuteur, chronomètre,
@@ -257,14 +236,11 @@ Un seul code, deux builds :
 - Décision : on accepte la superposition (minuteur et chrono rares). À revoir
   si Garmin fournit une API pour détecter ou placer cette icône.
 
-## Chantier 14 : une seule app, gratuite et open source (20/10/2026)
+## Chantier 13 : publication open source (20/10/2026)
 
-- Plus de version payante : Noir est gratuite, avec tous ses réglages.
-  Séparation du chantier 13 retirée (un seul `monkey.jungle`, un seul
-  manifest, réglages dans `resources/settings`, plus d'étiquettes
-  `(:pro)`/`(:free)`).
+- Noir est gratuite, avec tous ses réglages, et son code est sous GPL-3.0.
 - Code publié sur GitHub (README en anglais), app publiée sur le Connect IQ
-  Store (fiche : `store/noir.md`, paquet `store/Noir.iq` non versionné).
+  Store (fiche : `docs/store.md`, paquet `store/Noir.iq` non versionné).
 - `veille.png` déplacé dans `design/` ; gabarit `resources/layouts/layout.xml`
   (jamais utilisé) supprimé ; photos de travail ignorées par git.
 

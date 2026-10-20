@@ -1,4 +1,4 @@
-# Fiche Connect IQ Store : Noir (gratuite)
+# Fiche Connect IQ Store : Noir
 
 Textes à copier dans le developer dashboard. Vérifier sur le portail les limites
 de longueur et les champs exacts : ils ne sont pas documentés dans le SDK.
@@ -7,7 +7,7 @@ de longueur et les champs exacts : ils ne sont pas documentés dans le SDK.
 - **Type** : Watch face
 - **Prix** : gratuit
 - **Langues de la fiche** : anglais (par défaut), français
-- **Code source** : lien vers le dépôt GitHub à ajouter dans la description une fois publié
+- **Code source** : https://github.com/<compte>/noir-garmin-watchface (GPL-3.0), à ajouter en fin de description une fois publié
 
 ---
 
