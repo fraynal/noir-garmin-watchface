@@ -115,9 +115,13 @@ Dans `docs/screenshots/` (écran seul, 908 × 908 px, fond noir, simulateur fēn
 
 Originaux avec la fenêtre du simulateur : `docs/noir-*.png` (non versionnés).
 
-## Image de présentation (hero image)
+## Images pour le portail (`docs/store-images/`)
 
-Le portail exige **1440 × 720 px**. Dans `docs/store-images/` :
+**Screen Images** (captures, JPG/GIF/PNG **< 150 Ko**) : `screen-day.png`,
+`screen-evening.png`, `screen-night.png`, `screen-settings.png`, en 454 × 454 px
+(résolution réelle de l'écran), de 22 à 95 Ko.
+
+**Cover / hero image** (JPG/GIF/PNG **< 300 Ko**, **1440 × 720 px**) : Dans `docs/store-images/` :
 - `hero-en.png` (anglais) et `hero-fr.png` (français) : nom, accroche, écrans
   de jour et de nuit.
 - Générées par `python3 design/hero.py docs/screenshots docs/store-images/hero-en.png en`
