@@ -121,7 +121,7 @@ Originaux avec la fenêtre du simulateur : `docs/noir-*.png` (non versionnés).
 `screen-evening.png`, `screen-night.png`, `screen-settings.png`, en 454 × 454 px
 (résolution réelle de l'écran), de 22 à 95 Ko.
 
-**Cover / hero image** (JPG/GIF/PNG **< 300 Ko**, **1440 × 720 px**) : Dans `docs/store-images/` :
+**Cover / hero image** (JPG/GIF/PNG **< 300 Ko**, **1440 × 720 px**) :
 - `hero-en.png` (anglais) et `hero-fr.png` (français) : nom, accroche, écrans
   de jour et de nuit.
 - Générées par `python3 design/hero.py docs/screenshots docs/store-images/hero-en.png en`
