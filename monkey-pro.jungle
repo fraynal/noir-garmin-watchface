@@ -1,4 +1,0 @@
-# Noir Pro : réglages (resources-pro) et code marqué (:pro). Le code marqué (:free) est exclu.
-project.manifest = manifest-pro.xml
-base.resourcePath = resources;resources-pro
-base.excludeAnnotations = free

@@ -3,12 +3,11 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 
 // Réglages sur la montre, en plus de Garmin Connect : mêmes propriétés
-// et mêmes libellés que resources-pro/settings. Noir Pro seulement.
-(:pro)
+// et mêmes libellés que resources/settings.
 class NoirSettingsMenu extends WatchUi.Menu2 {
 
     function initialize() {
-        Menu2.initialize({:title => Rez.Strings.AppNamePro});
+        Menu2.initialize({:title => Rez.Strings.AppName});
         addToggle("ShowSeconds", Rez.Strings.ShowSecondsTitle);
         addItem(new WatchUi.MenuItem(Rez.Strings.TimeFormatTitle, choiceLabel("TimeFormat"), "TimeFormat", null));
         addToggle("ShowWeather", Rez.Strings.ShowWeatherTitle);
@@ -22,7 +21,6 @@ class NoirSettingsMenu extends WatchUi.Menu2 {
     }
 }
 
-(:pro)
 class NoirSettingsDelegate extends WatchUi.Menu2InputDelegate {
 
     function initialize() {
@@ -43,7 +41,6 @@ class NoirSettingsDelegate extends WatchUi.Menu2InputDelegate {
 }
 
 // Libellé du choix courant d'un réglage à 3 valeurs (0 = comme la montre).
-(:pro)
 function choiceLabel(key as String) as ResourceId {
     var labels = key.equals("TimeFormat")
         ? [Rez.Strings.FollowWatch, Rez.Strings.TimeFormat24, Rez.Strings.TimeFormat12]

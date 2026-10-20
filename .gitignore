@@ -1,2 +1,7 @@
 bin/
 store/*.iq
+# Photos et captures de travail, archives (non publiées)
+/*.jpeg
+/*.jpg
+/simu.png
+/*.zip

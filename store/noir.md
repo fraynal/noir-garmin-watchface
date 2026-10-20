@@ -7,6 +7,7 @@ de longueur et les champs exacts : ils ne sont pas documentés dans le SDK.
 - **Type** : Watch face
 - **Prix** : gratuit
 - **Langues de la fiche** : anglais (par défaut), français
+- **Code source** : lien vers le dépôt GitHub à ajouter dans la description une fois publié
 
 ---
 
@@ -24,9 +25,19 @@ A large, centered time with only what matters around it: weather, date, heart ra
 
 **Small details:**
 - Weather icon switches to night after the real sunset
-- 12/24 h and °C/°F follow your watch settings
+- 12/24 h and °C/°F follow your watch settings by default
 - Date in your watch's language
 - Status icons only when needed: phone disconnected, Do Not Disturb
+
+**Settings** (Garmin Connect app, or on the watch: hold MENU > Watch Face > Noir > Customize):
+- Show seconds
+- Time format: same as watch, 24 h, or 12 h (AM/PM)
+- Show weather
+- Temperature unit: same as watch, Celsius, or Fahrenheit
+- Battery percentage
+- Status icons
+
+Settings are available in English and French.
 
 **Permissions:**
 - *Complications*: to read heart rate, Body Battery, sunrise and sunset.
@@ -54,9 +65,19 @@ Une grande heure centrée, et autour seulement l'essentiel : météo, date, fré
 
 **Petits détails :**
 - L'icône météo passe en mode nuit après le vrai coucher du soleil
-- Format 12/24 h et °C/°F selon les réglages de la montre
+- Format 12/24 h et °C/°F selon les réglages de la montre, par défaut
 - Date dans la langue de la montre
 - Indicateurs seulement quand c'est utile : téléphone déconnecté, Ne pas déranger
+
+**Réglages** (app Garmin Connect, ou sur la montre : maintenir MENU > Cadran > Noir > Personnaliser) :
+- Afficher les secondes
+- Format de l'heure : comme la montre, 24 h ou 12 h (AM/PM)
+- Afficher la météo
+- Unité de température : comme la montre, Celsius ou Fahrenheit
+- Pourcentage de batterie
+- Indicateurs d'état
+
+Réglages disponibles en anglais et en français.
 
 **Permissions :**
 - *Complications* : pour lire la fréquence cardiaque, la Body Battery, le lever et le coucher du soleil.
@@ -76,7 +97,8 @@ Première version.
 2. **Écran actif, nuit** : ciel dégagé (lune), vers 21:00.
 3. **Veille** : *Display Mode > Always-On*, même heure que 2.
 4. **Indicateurs d'état** : téléphone déconnecté et Ne pas déranger actifs.
-5. Optionnel : une autre montre (Venu 3 ou Forerunner 965), pour montrer la compatibilité.
+5. **Réglages** : menu sur la montre (*Trigger App Settings* au simulateur).
+6. Optionnel : une autre montre (Venu 3 ou Forerunner 965), pour montrer la compatibilité.
 
 Format : captures de l'écran seul, fond noir, sans le boîtier du simulateur si
 possible (à confirmer selon ce qu'accepte le portail).
@@ -86,6 +108,6 @@ possible (à confirmer selon ce qu'accepte le portail).
 - [x] Retirer la trace `DBG`
 - [ ] Vérifier le nom « Noir » sur le Store
 - [ ] Captures d'écran
-- [ ] Paquet `.iq` : `monkeyc -e -r -f monkey.jungle -o store/Noir.iq -y <clé>`
-- [ ] Sauvegarder la clé développeur (`/Users/raynal/src/monkey-c/developer_key`) :
+- [x] Paquet `.iq` : `monkeyc -e -r -f monkey.jungle -o store/Noir.iq -y <clé>`
+- [ ] Sauvegarder la clé développeur (hors du dépôt, jamais sur GitHub) :
       toutes les mises à jour devront être signées avec la même clé

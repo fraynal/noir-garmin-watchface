@@ -68,7 +68,7 @@ probable du simulateur, **non confirmé sur la montre**.
 
 ## Chantier 3 : écran de veille (17/10/2026)
 
-Définition : `veille.png` (maquette sur fond noir : seuls les rapports de
+Définition : `design/veille.png` (maquette sur fond noir : seuls les rapports de
 taille et d'écart entre les éléments comptent, pas leur place à l'écran).
 
 ### Fait
@@ -222,7 +222,9 @@ tracés, sans texte SVG. Ancienne icône du modèle Garmin :
   nuit, donc sans information) ; conservée sur l'écran actif.
 - Pic de luminance mesuré au simulateur : 2,32 % (limite 10 %).
 
-## Chantier 13 : séparation Noir / Noir Pro (17/10/2026)
+## Chantier 13 : séparation Noir / Noir Pro (17/10/2026) — abandonnée
+
+> Annulée le 20/10/2026 (chantier 14) : une seule app gratuite. Conservé pour l'historique.
 
 Un seul code, deux builds :
 | | Noir | Noir Pro |
@@ -255,22 +257,18 @@ Un seul code, deux builds :
 - Décision : on accepte la superposition (minuteur et chrono rares). À revoir
   si Garmin fournit une API pour détecter ou placer cette icône.
 
-## Feuille de route (décidée le 17/10/2026)
+## Chantier 14 : une seule app, gratuite et open source (20/10/2026)
 
-### Deux versions, un seul code
-| | **Noir** (gratuite) | **Noir Pro** (payante) |
-|---|---|---|
-| Mise en page, veille AMOLED, icônes | ✓ | ✓ |
-| 12/24 h, °C/°F | suit la montre | suit la montre ou forcé |
-| Météo, % batterie, indicateurs d'état | toujours affichés | affichables ou masqués |
-| Secondes | non | en option |
-| 3 indicateurs | fixes (FC, Body Battery, pas) | au choix + mode Auto contextuel |
-| Réglages (montre, Garmin Connect) | aucun | tous |
-| Montres | identiques | identiques |
+- Plus de version payante : Noir est gratuite, avec tous ses réglages.
+  Séparation du chantier 13 retirée (un seul `monkey.jungle`, un seul
+  manifest, réglages dans `resources/settings`, plus d'étiquettes
+  `(:pro)`/`(:free)`).
+- Code publié sur GitHub (README en anglais), app publiée sur le Connect IQ
+  Store (fiche : `store/noir.md`, paquet `store/Noir.iq` non versionné).
+- `veille.png` déplacé dans `design/` ; gabarit `resources/layouts/layout.xml`
+  (jamais utilisé) supprimé ; photos de travail ignorées par git.
 
-Deux apps sur le Store (identifiants distincts), réglages compilés seulement
-pour la Pro (exclusion de code dans `monkey.jungle`). Prix Pro : à décider
-(marché : 2–5 $, achat unique ; paiement Garmin Pay dans le Store).
+## Feuille de route (révisée le 20/10/2026)
 
 ### Montres
 - Vague 1 : AMOLED rond 454/466 px (15 profils dans le manifest, API min. 4.2.0) :
@@ -280,26 +278,24 @@ pour la Pro (exclusion de code dans `monkey.jungle`). Prix Pro : à décider
 - Vague 2 : 416/390 px (~25 montres) : icônes à redimensionner par résolution.
 - Écrans MIP : non (design pensé pour l'AMOLED).
 
-### Fonctions phares (étude du 17/10/2026)
-- **Veille lisible** (Noir gratuite) : plainte n° 1 des utilisateurs AMOLED,
-  l'heure illisible en veille (Garmin assombrit l'écran, « by design »). Un trait
-  fin éclaire trop peu de pixels : chiffres pleins, grands, plus clairs, sous la
-  limite de 10 % (on est à 2,36 %), avec le décalage anti-marquage.
-- **Indicateurs contextuels « Auto »** (Noir Pro) : les 3 emplacements changent
-  selon le moment (réveil : sommeil, Body Battery, récupération ; journée : pas,
-  stress ; après activité : récupération ; soir : Body Battery). Esprit Smart
-  Stack d'Apple ; aucun cadran Connect IQ équivalent trouvé.
+### Fonctions (étude du 17/10/2026)
+- ~~Veille lisible~~ (fait, chantier 12).
+- **Indicateurs configurables**, puis **mode Auto contextuel** : les 3
+  emplacements changent selon le moment (réveil : sommeil, Body Battery,
+  récupération ; journée : pas, stress ; après activité : récupération ;
+  soir : Body Battery). Esprit Smart Stack d'Apple ; aucun cadran Connect IQ
+  équivalent trouvé.
 - Écartés : thèmes de couleurs, jauges de progression, données en masse
   (déjà partout, contraire à l'identité de Noir).
 
 ### Ordre
-1. ~~Écran du mode sommeil~~ (fait, chantier 11).
-2. ~~Veille lisible~~ (fait, chantier 12).
-3. ~~Séparation Noir / Noir Pro~~ (fait, chantier 13) ; ~~retrait de la trace DBG~~ ; publication de Noir (fiche : `store/noir.md`).
-4. Indicateurs configurables, puis mode Auto ; publication de Noir Pro.
+1. Vérifier l'affichage des montres de la vague 1 au simulateur.
+2. Publier : code sur GitHub, app sur le Store.
+3. Indicateurs configurables, puis mode Auto.
+4. Vague 2 de montres.
 
 ## Chantiers suivants
-- **Indicateurs configurables** (gros chantier, après la publication) : choisir les trois
+- **Indicateurs configurables** (gros chantier) : choisir les trois
   indicateurs (aujourd'hui FC, Body Battery, pas) parmi stress, calories,
   étages, distance, minutes d'intensité… via les complications Garmin.
   Demande une liste de choix par emplacement, une icône et un format de valeur
