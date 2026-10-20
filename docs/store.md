@@ -18,9 +18,9 @@ Contraintes du portail (constatées à l'envoi) :
 
 ## English
 
-### Title (49/50)
+### Title (50/50)
 
-Noir: a minimalist AMOLED watch face you can read
+Noir: the AMOLED watch face you can actually read.
 
 ### Description
 
