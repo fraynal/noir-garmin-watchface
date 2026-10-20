@@ -35,9 +35,31 @@ Noir collects no data and sends nothing.
 
 ## Supported watches
 
-AMOLED round watches with a 454 or 466 px screen: fēnix 9 / 9 Pro, fēnix 8 / 8 Pro (and tactix 8, quatix 8), epix Pro (Gen 2) 51 mm (and D2 Mach 1 Pro, tactix 7 AMOLED), D2 Mach 2 / Mach 2 Pro, MARQ (Gen 3), Forerunner 965, 970 and 570 47 mm, Venu 3, Venu 4 45 mm, Approach S72 47 mm.
+AMOLED round watches with a 454 or 466 px screen. Smaller AMOLED screens (416 and 390 px) are planned. MIP screens are not supported: the design is made for AMOLED.
 
-Smaller AMOLED screens (416 and 390 px) are planned. MIP screens are not supported: the design is made for AMOLED.
+> **Only the fēnix 9 Pro 47 mm has been tested on a real watch.** The other watches share the same screen size and build without errors, but nobody has checked them yet. If you own one, please [report how Noir looks on it](../../issues/new?template=device-report.md): it takes two minutes and a photo.
+
+| Watch | Device id | Status |
+|---|---|---|
+| fēnix 9 Pro 47 mm | `fenix9pro47mm` | ✅ tested on the watch |
+| fēnix 9 Pro 51 mm | `fenix9pro51mm` | 🔨 builds, not tested |
+| fēnix 9 47 / 51 mm | `fenix947mm` | 🔨 builds, not tested |
+| fēnix 8 47 / 51 mm, tactix 8, quatix 8 | `fenix847mm` | 🔨 builds, not tested |
+| fēnix 8 Pro 47 / 51 mm, MicroLED, quatix 8 Pro | `fenix8pro47mm` | 🔨 builds, not tested |
+| epix Pro (Gen 2) 51 mm, D2 Mach 1 Pro, tactix 7 AMOLED | `epix2pro51mm` | 🔨 builds, not tested |
+| D2 Mach 2 | `d2mach2` | 🔨 builds, not tested |
+| D2 Mach 2 Pro | `d2mach2pro` | 🔨 builds, not tested |
+| MARQ (Gen 3) | `marq3` | 🔨 builds, not tested |
+| Forerunner 965 | `fr965` | 🔨 builds, not tested |
+| Forerunner 970 | `fr970` | 🔨 builds, not tested |
+| Forerunner 570 47 mm | `fr57047mm` | 🔨 builds, not tested |
+| Venu 3 | `venu3` | 🔨 builds, not tested |
+| Venu 4 45 mm | `venu445mm` | 🔨 builds, not tested |
+| Approach S72 47 mm | `approachs7247mm` | 🔨 builds, not tested |
+
+## Contributing
+
+Reports from other watches are the most useful contribution right now: open a [device report](../../issues/new?template=device-report.md) with a photo of the watch face (active screen and, if you can, always-on screen). Bug reports and pull requests are welcome too.
 
 ## Known limitation
 

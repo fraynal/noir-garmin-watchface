@@ -45,6 +45,8 @@ Settings are available in English and French.
 
 Noir collects no data and sends nothing.
 
+Tested on fēnix 9 Pro 47 mm. On other watches, please report any display issue on GitHub (link below): your feedback helps.
+
 ### What's new (1.0.0)
 
 First release.
@@ -84,6 +86,8 @@ Réglages disponibles en anglais et en français.
 - *Profil utilisateur* : uniquement pour lire vos heures de sommeil pour l'écran de nuit.
 
 Noir ne collecte aucune donnée et n'envoie rien.
+
+Testé sur fēnix 9 Pro 47 mm. Sur une autre montre, signalez tout problème d'affichage sur GitHub (lien ci-dessous) : votre retour aide.
 
 ### Nouveautés (1.0.0)
 
