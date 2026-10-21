@@ -244,6 +244,19 @@ tracés, sans texte SVG. Ancienne icône du modèle Garmin :
 - `veille.png` déplacé dans `design/` ; gabarit `resources/layouts/layout.xml`
   (jamais utilisé) supprimé ; photos de travail ignorées par git.
 
+## Chantier 14 : fréquence cardiaque (21/10/2026)
+
+- Constat : à vélo, Noir affichait ~70 quand une ceinture HRM 600 (connectée
+  au téléphone) donnait ~110. Noir affichait bien la mesure de la montre : c'est
+  le capteur optique au poignet qui sous-estimait (crispation, vibrations).
+  Un cadran ne peut pas améliorer cette mesure.
+- Changement : lecture à chaque dessin au lieu de la seule notification de la
+  complication. Ordre : `Activity.getActivityInfo().currentHeartRate` (poignet,
+  ou ceinture connectée à la montre pendant une activité enregistrée), puis
+  dernier relevé de `ActivityMonitor.getHeartRateHistory`, puis la complication.
+- Conseils utilisateur : enregistrer la séance comme activité sur la montre
+  (mesure continue, plus réactive), bracelet serré au-dessus de l'os du poignet.
+
 ## Feuille de route (révisée le 20/10/2026)
 
 ### Montres
