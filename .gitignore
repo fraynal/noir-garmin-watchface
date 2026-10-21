@@ -6,3 +6,4 @@ store/*.iq
 /simu.png
 /*.zip
 /docs/noir-*.png
+.DS_Store
