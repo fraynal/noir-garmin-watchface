@@ -17,9 +17,14 @@ Noir is a free [Connect IQ](https://developer.garmin.com/connect-iq/) watch face
 - **Readable always-on.** When the watch dims the screen, Noir switches to a thicker, brighter time with the date and battery. It stays well below Garmin's 10% luminance limit (about 2.3% measured) and shifts a few pixels every minute to protect the AMOLED screen.
 - **Night screen.** During your sleep hours (set in Garmin Connect), Noir keeps its dim screen even when you raise your wrist. On the watch, set *Focus Modes > Sleep > Watch Face > Don't change* so Noir stays active at night.
 - **Weather icon follows the real sunset**, using the sunrise and sunset computed by the watch.
+- **Choose your three indicators** in the watch face editor of the watch: heart rate, Body Battery, steps, stress, calories, floors climbed, intensity minutes, respiration, pulse ox, recovery time, sleep score, altitude, solar input.
 - **Status icons only when needed**: phone disconnected, Do Not Disturb.
 - **12/24 h and °C/°F follow your watch settings** by default.
 - Date in the watch's language; settings in English and French.
+
+## Indicators
+
+The three indicators at the bottom (default: heart rate, Body Battery, steps) are chosen in the native watch face editor of the watch: hold MENU > Watch Face > Noir > Customize (or Edit), then tap an indicator. The editor exists on fēnix 8 and newer watches; on Forerunner 965, Venu 3 and epix Pro (Gen 2) the default indicators are used.
 
 ## Settings
 
@@ -104,7 +109,7 @@ docs/store.md         Connect IQ Store listing, in English and French
 
 ## Credits
 
-Icons are derived from [Lucide](https://lucide.dev) (ISC license; some icons from Feather, MIT license). See [design/LICENSE-lucide.txt](design/LICENSE-lucide.txt).
+Weather, heart rate, Body Battery, steps and status icons are derived from [Lucide](https://lucide.dev) (ISC license; some icons from Feather, MIT license). See [design/LICENSE-lucide.txt](design/LICENSE-lucide.txt). The other indicator icons were drawn for Noir in the same style.
 
 ## License
 

@@ -104,6 +104,16 @@ class NoirIndicators {
         if (type == Complications.COMPLICATION_TYPE_HEART_RATE) { return Rez.Drawables.heart; }
         if (type == Complications.COMPLICATION_TYPE_BODY_BATTERY) { return Rez.Drawables.bolt; }
         if (type == Complications.COMPLICATION_TYPE_STEPS) { return Rez.Drawables.steps; }
+        if (type == Complications.COMPLICATION_TYPE_STRESS) { return Rez.Drawables.stress; }
+        if (type == Complications.COMPLICATION_TYPE_CALORIES) { return Rez.Drawables.calories; }
+        if (type == Complications.COMPLICATION_TYPE_FLOORS_CLIMBED) { return Rez.Drawables.floors; }
+        if (type == Complications.COMPLICATION_TYPE_INTENSITY_MINUTES) { return Rez.Drawables.intensity; }
+        if (type == Complications.COMPLICATION_TYPE_RESPIRATION_RATE) { return Rez.Drawables.respiration; }
+        if (type == Complications.COMPLICATION_TYPE_PULSE_OX) { return Rez.Drawables.pulse_ox; }
+        if (type == Complications.COMPLICATION_TYPE_RECOVERY_TIME) { return Rez.Drawables.recovery; }
+        if (type == Complications.COMPLICATION_TYPE_SLEEP_SCORE) { return Rez.Drawables.sleep_score; }
+        if (type == Complications.COMPLICATION_TYPE_ALTITUDE) { return Rez.Drawables.altitude; }
+        if (type == Complications.COMPLICATION_TYPE_SOLAR_INPUT) { return Rez.Drawables.solar; }
         return null;
     }
 

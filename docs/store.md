@@ -36,6 +36,8 @@ A large, centered time with only what matters around it: weather, date, heart ra
 - Date in your watch's language
 - Status icons only when needed: phone disconnected, Do Not Disturb
 
+**Your three indicators**, chosen in the watch face editor (fēnix 8 and newer): heart rate, Body Battery, steps, stress, calories, floors, intensity minutes, respiration, pulse ox, recovery time, sleep score, altitude, solar input.
+
 **Settings** (Garmin Connect app, or on the watch: hold MENU / Watch Face / Noir / Customize):
 - Show seconds
 - Time format: same as watch, 24 h, or 12 h (AM/PM)
@@ -54,9 +56,12 @@ Noir collects no data and sends nothing.
 
 **An open-source project in development.** Noir has been tested on fēnix 9 Pro 47 mm only. Feedback from other watches, bug reports and contributions are welcome on GitHub: https://github.com/fraynal/noir-garmin-watchface
 
-### What's new (1.0.0)
+### What's new (1.1.0)
 
-First release.
+- Choose your three indicators in the watch face editor (fēnix 8 and newer): 13 data fields available.
+- Heart rate now updates continuously.
+
+1.0.0: first release.
 
 ---
 
@@ -80,6 +85,8 @@ Une grande heure centrée, et autour seulement l'essentiel : météo, date, fré
 - Date dans la langue de la montre
 - Indicateurs seulement quand c'est utile : téléphone déconnecté, Ne pas déranger
 
+**Vos trois indicateurs**, choisis dans l'éditeur de cadran de la montre (fēnix 8 et plus récentes) : fréquence cardiaque, Body Battery, pas, stress, calories, étages, minutes d'intensité, respiration, SpO2, temps de récupération, score de sommeil, altitude, recharge solaire.
+
 **Réglages** (app Garmin Connect, ou sur la montre : maintenir MENU / Cadran / Noir / Personnaliser) :
 - Afficher les secondes
 - Format de l'heure : comme la montre, 24 h ou 12 h (AM/PM)
@@ -98,9 +105,12 @@ Noir ne collecte aucune donnée et n'envoie rien.
 
 **Un projet open source en développement.** Noir n'a été testé que sur fēnix 9 Pro 47 mm. Retours sur d'autres montres, signalements de bugs et contributions sont les bienvenus sur GitHub : https://github.com/fraynal/noir-garmin-watchface
 
-### Nouveautés (1.0.0)
+### Nouveautés (1.1.0)
 
-Première version.
+- Choisissez vos trois indicateurs dans l'éditeur de cadran (fēnix 8 et plus récentes) : 13 données disponibles.
+- La fréquence cardiaque s'actualise en continu.
+
+1.0.0 : première version.
 
 ---
 

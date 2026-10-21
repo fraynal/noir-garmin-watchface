@@ -17,6 +17,16 @@
     <bitmap id="weather_wind" filename="../images/weather_wind.svg" />
     <bitmap id="weather_ice" filename="../images/weather_ice.svg" />
     <bitmap id="weather_unknown" filename="../images/weather_unknown.svg" />
+    <bitmap id="stress" filename="../images/stress.svg" />
+    <bitmap id="calories" filename="../images/calories.svg" />
+    <bitmap id="floors" filename="../images/floors.svg" />
+    <bitmap id="intensity" filename="../images/intensity.svg" />
+    <bitmap id="respiration" filename="../images/respiration.svg" />
+    <bitmap id="pulse_ox" filename="../images/pulse_ox.svg" />
+    <bitmap id="recovery" filename="../images/recovery.svg" />
+    <bitmap id="sleep_score" filename="../images/sleep_score.svg" />
+    <bitmap id="altitude" filename="../images/altitude.svg" />
+    <bitmap id="solar" filename="../images/solar.svg" />
     <bitmap id="phone_off" filename="../images/phone_off.svg" />
     <bitmap id="phone_off_dim" filename="../images/phone_off_dim.svg" />
     <bitmap id="dnd" filename="../images/dnd.svg" />

@@ -257,6 +257,26 @@ tracés, sans texte SVG. Ancienne icône du modèle Garmin :
 - Conseils utilisateur : enregistrer la séance comme activité sur la montre
   (mesure continue, plus réactive), bracelet serré au-dessus de l'os du poignet.
 
+## Chantier 15 : indicateurs configurables (21/10/2026), version 1.1.0
+
+- Éditeur de cadran natif (`WatchFaceConfig`, API 5.1, fenix 8 et plus
+  récentes) plutôt que nos propres réglages : interface Garmin, déclaration
+  dans `resources/watchface/watchface_config.xml` (3 emplacements, 13 données,
+  FC / Body Battery / pas par défaut). Le compilateur valide ce fichier.
+- Montres sans éditeur : FR 965, Venu 3, epix Pro (Gen 2), sorties en 2023 ;
+  elles gardent les indicateurs par défaut.
+- `NoirIndicators` : configuration (`WatchFaceConfig.getSettings`), abonnement
+  aux complications choisies, format par donnée, icône par donnée ; FC et pas
+  lus en direct. `NoirWatchFaceDelegate` : `onTap` sélectionne l'emplacement
+  (zone 60–80 % de la hauteur), `onWatchFaceConfigEdited` relit la configuration.
+- Score de sommeil : API 6.0.2 (absent des montres en 5.2, qui n'ont pas d'éditeur).
+- Icônes : 10 nouvelles, générées avec `docs/icons-prompt.md` (originaux dans
+  `design/icons-original/indicators/`).
+- « Auto » (indicateurs contextuels) : prévu comme style de l'éditeur
+  (`<style>` dans `watchface_config.xml`).
+- À vérifier sur la montre : sélection au toucher, surbrillance de
+  l'emplacement dans l'éditeur (`getComplicationDrawable` non fourni).
+
 ## Feuille de route (révisée le 20/10/2026)
 
 ### Montres
@@ -280,7 +300,7 @@ tracés, sans texte SVG. Ancienne icône du modèle Garmin :
 ### Ordre
 1. Vérifier l'affichage des montres de la vague 1 au simulateur.
 2. Publier : code sur GitHub, app sur le Store.
-3. Indicateurs configurables, puis mode Auto.
+3. ~~Indicateurs configurables~~ (fait, chantier 15), puis mode Auto.
 4. Vague 2 de montres.
 
 ## Chantiers suivants
