@@ -24,7 +24,7 @@ Noir is a free [Connect IQ](https://developer.garmin.com/connect-iq/) watch face
 
 ## Indicators
 
-The three indicators at the bottom (default: heart rate, Body Battery, steps) are chosen in the native watch face editor of the watch: hold MENU > Watch Face > Noir > Customize (or Edit), then tap an indicator. The editor exists on fēnix 8 and newer watches; on Forerunner 965, Venu 3 and epix Pro (Gen 2) the default indicators are used.
+The three indicators at the bottom (default: heart rate, Body Battery, steps) are chosen in the native watch face editor of the watch: hold MENU > Watch Face > Noir > Data, then pick an indicator and its data. The editor exists on fēnix 8 and newer watches; on Forerunner 965, Venu 3 and epix Pro (Gen 2) the default indicators are used.
 
 ## Settings
 

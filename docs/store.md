@@ -36,7 +36,7 @@ A large, centered time with only what matters around it: weather, date, heart ra
 - Date in your watch's language
 - Status icons only when needed: phone disconnected, Do Not Disturb
 
-**Your three indicators**, chosen in the watch face editor (fēnix 8 and newer): heart rate, Body Battery, steps, stress, calories, floors, intensity minutes, respiration, pulse ox, recovery time, sleep score, altitude, solar input.
+**Your three indicators**, chosen in the watch face editor (hold MENU / Watch Face / Noir / Data; fēnix 8 and newer): heart rate, Body Battery, steps, stress, calories, floors, intensity minutes, respiration, pulse ox, recovery time, sleep score, altitude, solar input.
 
 **Settings** (Garmin Connect app, or on the watch: hold MENU / Watch Face / Noir / Customize):
 - Show seconds
@@ -85,7 +85,7 @@ Une grande heure centrée, et autour seulement l'essentiel : météo, date, fré
 - Date dans la langue de la montre
 - Indicateurs seulement quand c'est utile : téléphone déconnecté, Ne pas déranger
 
-**Vos trois indicateurs**, choisis dans l'éditeur de cadran de la montre (fēnix 8 et plus récentes) : fréquence cardiaque, Body Battery, pas, stress, calories, étages, minutes d'intensité, respiration, SpO2, temps de récupération, score de sommeil, altitude, recharge solaire.
+**Vos trois indicateurs**, choisis dans l'éditeur de cadran de la montre (maintenir MENU / Cadran / Noir / Data ; fēnix 8 et plus récentes) : fréquence cardiaque, Body Battery, pas, stress, calories, étages, minutes d'intensité, respiration, SpO2, temps de récupération, score de sommeil, altitude, recharge solaire.
 
 **Réglages** (app Garmin Connect, ou sur la montre : maintenir MENU / Cadran / Noir / Personnaliser) :
 - Afficher les secondes

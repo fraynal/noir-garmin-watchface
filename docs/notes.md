@@ -274,8 +274,9 @@ tracés, sans texte SVG. Ancienne icône du modèle Garmin :
   `design/icons-original/indicators/`).
 - « Auto » (indicateurs contextuels) : prévu comme style de l'éditeur
   (`<style>` dans `watchface_config.xml`).
-- À vérifier sur la montre : sélection au toucher, surbrillance de
-  l'emplacement dans l'éditeur (`getComplicationDrawable` non fourni).
+- Validé sur fenix 9 Pro le 21/10/2026 : MENU > Cadran > Noir propose
+  *Customize* (nos réglages), *Data* (les 3 indicateurs, éditeur natif) et
+  *Styles* (« Noir » seul). Toutes les données n'ont pas été essayées.
 
 ## Feuille de route (révisée le 20/10/2026)
 
