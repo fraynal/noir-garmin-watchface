@@ -76,7 +76,7 @@ class NoirIndicators {
         show(ids(autoTypes(clock)));
     }
 
-    // Gauche = état du corps, centre = énergie, droite = progression.
+    // Gauche = état instantané du corps, centre = énergie, droite = bilan du moment.
     function autoTypes(clock as System.ClockTime) as Array<Complications.Type> {
         var hr = Complications.COMPLICATION_TYPE_HEART_RATE;
         var bb = Complications.COMPLICATION_TYPE_BODY_BATTERY;
@@ -88,9 +88,9 @@ class NoirIndicators {
         var now = clock.hour * 3600 + clock.min * 60 + clock.sec;
         if (profile != null && profile.wakeTime != null
                 && within(now, profile.wakeTime.value(), mWindow)) {
-            // Score de sommeil absent des montres en API 5.2 : FC à la place.
+            // Score de sommeil absent des montres en API 5.2 : minutes d'intensité.
             var sleep = Complications.COMPLICATION_TYPE_SLEEP_SCORE;
-            return [hasValue(sleep) ? sleep : hr, bb, intensity];
+            return [hr, bb, hasValue(sleep) ? sleep : intensity];
         }
         if (profile != null && profile.sleepTime != null
                 && within(now, profile.sleepTime.value() - mWindow, mWindow)) {

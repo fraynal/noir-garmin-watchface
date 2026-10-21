@@ -31,7 +31,7 @@ The three indicators at the bottom (default: heart rate, Body Battery, steps) ar
 | Moment | Left | Center | Right |
 |---|---|---|---|
 | After an activity | heart rate | Body Battery | intensity minutes |
-| After waking up | sleep score | Body Battery | intensity minutes |
+| After waking up | heart rate | Body Battery | sleep score |
 | Before bedtime | stress | Body Battery | steps |
 | Rest of the day | heart rate | Body Battery | steps |
 

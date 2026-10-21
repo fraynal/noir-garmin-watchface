@@ -285,13 +285,13 @@ tracés, sans texte SVG. Ancienne icône du modèle Garmin :
 
 Option *Auto indicators* (désactivée par défaut). Activée, elle remplace les
 choix de *Data* (jamais de mélange). Chaque emplacement garde un rôle :
-gauche = état du corps, centre = énergie (Body Battery, toujours), droite =
-progression.
+gauche = état instantané du corps, centre = énergie (Body Battery, toujours),
+droite = bilan du moment.
 
 | Moment (priorité décroissante) | Détection | Gauche | Centre | Droite |
 |---|---|---|---|---|
 | Après une activité | fin de la dernière activité de l'historique depuis moins de D | FC | Body Battery | Minutes d'intensité |
-| Réveil | heure de lever du profil, pendant D | Score de sommeil | Body Battery | Minutes d'intensité |
+| Réveil | heure de lever du profil, pendant D | FC | Body Battery | Score de sommeil |
 | Soirée | D avant l'heure de coucher du profil | Stress | Body Battery | Pas |
 | Journée | sinon | FC | Body Battery | Pas |
 | Nuit | heures de sommeil | écran de nuit (déjà géré) | | |
@@ -300,7 +300,9 @@ progression.
 - Récupération écartée (jugée trop prudente par Garmin) au profit des minutes
   d'intensité, à comparer à la Body Battery.
 - Pas d'exception d'alerte (Body Battery basse…) dans cette version.
-- Score de sommeil indisponible (montres en API 5.2) : FC à la place.
+- Score de sommeil indisponible (montres en API 5.2) : minutes d'intensité.
+- Révisé le 21/10/2026 après essai : au réveil FC / Body Battery / score de
+  sommeil (droite = bilan du moment : nuit, effort, journée).
 
 ## Feuille de route (révisée le 20/10/2026)
 

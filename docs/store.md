@@ -38,7 +38,7 @@ A large, centered time with only what matters around it: weather, date, heart ra
 
 **Your three indicators**, chosen in the watch face editor (hold MENU / Watch Face / Noir / Data; fēnix 8 and newer): heart rate, Body Battery, steps, stress, calories, floors, intensity minutes, respiration, pulse ox, recovery time, sleep score, altitude, solar input.
 
-**Auto indicators** (option): the indicators follow your day, sleep score and intensity minutes after waking up, intensity minutes after an activity, stress before bedtime.
+**Auto indicators** (option): the indicators follow your day: sleep score after waking up, intensity minutes after an activity, stress before bedtime.
 
 **Settings** (Garmin Connect app, or on the watch: hold MENU / Watch Face / Noir / Customize):
 - Show seconds
@@ -91,7 +91,7 @@ Une grande heure centrée, et autour seulement l'essentiel : météo, date, fré
 
 **Vos trois indicateurs**, choisis dans l'éditeur de cadran de la montre (maintenir MENU / Cadran / Noir / Data ; fēnix 8 et plus récentes) : fréquence cardiaque, Body Battery, pas, stress, calories, étages, minutes d'intensité, respiration, SpO2, temps de récupération, score de sommeil, altitude, recharge solaire.
 
-**Indicateurs automatiques** (option) : les indicateurs suivent votre journée, score de sommeil et minutes d'intensité au réveil, minutes d'intensité après une activité, stress avant le coucher.
+**Indicateurs automatiques** (option) : les indicateurs suivent votre journée : score de sommeil au réveil, minutes d'intensité après une activité, stress avant le coucher.
 
 **Réglages** (app Garmin Connect, ou sur la montre : maintenir MENU / Cadran / Noir / Personnaliser) :
 - Afficher les secondes
