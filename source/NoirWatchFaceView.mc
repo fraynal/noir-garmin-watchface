@@ -1,4 +1,5 @@
 import Toybox.Graphics;
+import Toybox.Activity;
 import Toybox.System;
 import Toybox.WatchUi;
 import Toybox.Time;
@@ -147,6 +148,26 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         WatchUi.requestUpdate();
     }
 
+    // Fréquence cardiaque lue à chaque dessin : la complication seule n'est
+    // notifiée que de loin en loin et restait figée pendant un effort.
+    // 1. Fréquence instantanée (poignet, ou ceinture connectée pendant une activité)
+    // 2. Dernier relevé de l'historique  3. Dernière valeur de la complication
+    function heartRateText() {
+        var info = Activity.getActivityInfo();
+        if (info != null && info.currentHeartRate != null) {
+            return info.currentHeartRate.toString();
+        }
+        var history = ActivityMonitor.getHeartRateHistory(1, true);
+        if (history != null) {
+            var sample = history.next();
+            if (sample != null && sample.heartRate != null
+                    && sample.heartRate != ActivityMonitor.INVALID_HR_SAMPLE) {
+                return sample.heartRate.toString();
+            }
+        }
+        return mHeartRateText;
+    }
+
     // En cas d'absence de donnée, afficher "--" sans faire planter le cadran.
     function readComplicationText(id) {
         try {
@@ -209,7 +230,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         var iconY = (h * 0.66).toNumber();
         var valueY = (h * 0.735).toNumber();
         drawCenteredIcon(dc, cx - spacing, iconY, mHeart);
-        drawValue(dc, cx - spacing, valueY, mHeartRateText, gray);
+        drawValue(dc, cx - spacing, valueY, heartRateText(), gray);
         drawCenteredIcon(dc, cx, iconY, mBolt);
         drawValue(dc, cx, valueY, mBodyBatteryText, gray);
         drawCenteredIcon(dc, cx + spacing, iconY, mSteps);
