@@ -5,6 +5,8 @@ import Toybox.WatchUi;
 class NoirWatchFaceApp extends Application.AppBase {
 
     var mView;
+    // Configuration à afficher quand l'éditeur de cadran lance l'app (sinon la configuration active).
+    var mConfigId = null;
 
     function initialize() {
         AppBase.initialize();
@@ -12,6 +14,9 @@ class NoirWatchFaceApp extends Application.AppBase {
 
     // onStart() is called on application start up
     function onStart(state as Dictionary?) as Void {
+        if (state != null && state.hasKey(:configId)) {
+            mConfigId = state[:configId];
+        }
     }
 
     // onStop() is called when your application is exiting
@@ -21,7 +26,10 @@ class NoirWatchFaceApp extends Application.AppBase {
     // Return the initial view of your application here
     function getInitialView() as [Views] or [Views, InputDelegates] {
         mView = new NoirWatchFaceView();
-        return [ mView ];
+        if (mConfigId != null) {
+            mView.mIndicators.load(mConfigId);
+        }
+        return [ mView, new NoirWatchFaceDelegate(mView) ];
     }
 
     // Menu de réglages sur la montre (cadran > personnaliser).

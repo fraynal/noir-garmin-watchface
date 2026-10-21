@@ -1,10 +1,9 @@
 import Toybox.Graphics;
-import Toybox.Activity;
+import Toybox.Lang;
 import Toybox.System;
 import Toybox.WatchUi;
 import Toybox.Time;
 import Toybox.Time.Gregorian;
-import Toybox.ActivityMonitor;
 import Toybox.Weather;
 import Toybox.Complications;
 import Toybox.Application;
@@ -12,20 +11,14 @@ import Toybox.UserProfile;
 
 class NoirWatchFaceView extends WatchUi.WatchFace {
 
-    var mHeart;
-    var mBolt;
-    var mSteps;
     var mWeatherIcons;
     // Indicateurs d'état : normal et atténué (veille).
     var mPhoneOff;
     var mPhoneOffDim;
     var mDnd;
 
-    // Données natives du cadran, rafraîchies lors des notifications Garmin.
-    var mHeartRateId;
-    var mBodyBatteryId;
-    var mHeartRateText = "--";
-    var mBodyBatteryText = "--";
+    // Les trois indicateurs du bas (éditeur de cadran de la montre).
+    var mIndicators as NoirIndicators;
 
     // Vrai pendant la veille (écran toujours allumé, mode basse consommation).
     var mSleeping = false;
@@ -42,9 +35,7 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         WatchFace.initialize();
         loadSettings();
         // Charger une seule fois les ressources (pas dans onUpdate).
-        mHeart = WatchUi.loadResource(Rez.Drawables.heart);
-        mBolt = WatchUi.loadResource(Rez.Drawables.bolt);
-        mSteps = WatchUi.loadResource(Rez.Drawables.steps);
+        mIndicators = new NoirIndicators();
         mPhoneOff = WatchUi.loadResource(Rez.Drawables.phone_off);
         mPhoneOffDim = WatchUi.loadResource(Rez.Drawables.phone_off_dim);
         mDnd = WatchUi.loadResource(Rez.Drawables.dnd);
@@ -91,32 +82,8 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
     // Enregistrer les complications quand le cadran devient visible.
     function onShow() as Void {
         WatchFace.onShow();
-
-        mHeartRateId = new Complications.Id(
-            Complications.COMPLICATION_TYPE_HEART_RATE
-        );
-        mBodyBatteryId = new Complications.Id(
-            Complications.COMPLICATION_TYPE_BODY_BATTERY
-        );
-
-        Complications.registerComplicationChangeCallback(
-            self.method(:onComplicationChanged)
-        );
-
-        // Une complication peut être indisponible dans le simulateur.
-        try {
-            Complications.subscribeToUpdates(mHeartRateId);
-        } catch (e) {
-            // Conserver "--" si indisponible.
-        }
-        try {
-            Complications.subscribeToUpdates(mBodyBatteryId);
-        } catch (e) {
-            // Conserver "--" si indisponible.
-        }
-
-        mHeartRateText = readComplicationText(mHeartRateId);
-        mBodyBatteryText = readComplicationText(mBodyBatteryId);
+        Complications.registerComplicationChangeCallback(self.method(:onComplicationChanged));
+        mIndicators.subscribe();
     }
 
     function onHide() as Void {
@@ -125,15 +92,9 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         WatchFace.onHide();
     }
 
-    // Appelé lors d'un changement de fréquence cardiaque ou Body Battery.
     function onComplicationChanged(id as Complications.Id) as Void {
-        if (id.equals(mHeartRateId)) {
-            mHeartRateText = readComplicationText(mHeartRateId);
-        } else if (id.equals(mBodyBatteryId)) {
-            mBodyBatteryText = readComplicationText(mBodyBatteryId);
-        }
-        // En veille, les mesures de santé ne sont pas affichées : pas de redessin.
-        if (!mSleeping) {
+        // En veille, les indicateurs ne sont pas affichés : pas de redessin.
+        if (mIndicators.onChanged(id) && !mSleeping) {
             WatchUi.requestUpdate();
         }
     }
@@ -146,39 +107,6 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
     function onExitSleep() as Void {
         mSleeping = false;
         WatchUi.requestUpdate();
-    }
-
-    // Fréquence cardiaque lue à chaque dessin : la complication seule n'est
-    // notifiée que de loin en loin et restait figée pendant un effort.
-    // 1. Fréquence instantanée (poignet, ou ceinture connectée pendant une activité)
-    // 2. Dernier relevé de l'historique  3. Dernière valeur de la complication
-    function heartRateText() {
-        var info = Activity.getActivityInfo();
-        if (info != null && info.currentHeartRate != null) {
-            return info.currentHeartRate.toString();
-        }
-        var history = ActivityMonitor.getHeartRateHistory(1, true);
-        if (history != null) {
-            var sample = history.next();
-            if (sample != null && sample.heartRate != null
-                    && sample.heartRate != ActivityMonitor.INVALID_HR_SAMPLE) {
-                return sample.heartRate.toString();
-            }
-        }
-        return mHeartRateText;
-    }
-
-    // En cas d'absence de donnée, afficher "--" sans faire planter le cadran.
-    function readComplicationText(id) {
-        try {
-            var complication = Complications.getComplication(id);
-            if (complication != null && complication.value != null) {
-                return complication.value.toString();
-            }
-        } catch (e) {
-            // Exemple : valeur indisponible dans le simulateur.
-        }
-        return "--";
     }
 
     function onUpdate(dc as Graphics.Dc) as Void {
@@ -218,23 +146,18 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         var timeY = (h * 0.47).toNumber();
         drawTime(dc, cx, timeY, s, Graphics.FONT_NUMBER_HOT, white, clock, mShowSeconds, 0);
 
-        // PAS
-        var stepsText = "--";
-        var info = ActivityMonitor.getInfo();
-        if (info != null && info.steps != null) {
-            stepsText = formatSteps(info.steps);
-        }
-
-        // INDICATEURS
-        var spacing = (w * 0.255).toNumber();
+        // INDICATEURS : gauche, centre, droite
+        var spacing = (w * INDICATOR_SPACING).toNumber();
         var iconY = (h * 0.66).toNumber();
         var valueY = (h * 0.735).toNumber();
-        drawCenteredIcon(dc, cx - spacing, iconY, mHeart);
-        drawValue(dc, cx - spacing, valueY, heartRateText(), gray);
-        drawCenteredIcon(dc, cx, iconY, mBolt);
-        drawValue(dc, cx, valueY, mBodyBatteryText, gray);
-        drawCenteredIcon(dc, cx + spacing, iconY, mSteps);
-        drawValue(dc, cx + spacing, valueY, stepsText, gray);
+        for (var i = 0; i < 3; i++) {
+            var x = cx + (i - 1) * spacing;
+            var icon = mIndicators.icon(i);
+            if (icon != null) {
+                drawCenteredIcon(dc, x, iconY, icon);
+            }
+            drawValue(dc, x, valueY, mIndicators.text(i), gray);
+        }
 
         // BATTERIE MONTRE
         var batteryY = (h * 0.87).toNumber();
@@ -415,6 +338,25 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
             + " " + today.month.toString().toUpper();
     }
 
+    // Écart horizontal entre deux indicateurs, en fraction de la largeur.
+    const INDICATOR_SPACING = 0.255;
+
+    // Éditeur de cadran : emplacement (1 gauche, 2 centre, 3 droite) sous un
+    // point de l'écran, ou null hors de la zone des indicateurs.
+    function indicatorAt(x as Number, y as Number) as Number or Null {
+        var settings = System.getDeviceSettings();
+        var w = settings.screenWidth;
+        var h = settings.screenHeight;
+        if (y < h * 0.60 || y > h * 0.80) {
+            return null;
+        }
+        var half = w * INDICATOR_SPACING / 2;
+        if (x < w / 2 - half) {
+            return 1;
+        }
+        return x > w / 2 + half ? 3 : 2;
+    }
+
     function drawCenteredIcon(dc, x, y, bitmap) {
         dc.drawBitmap(x - bitmap.getWidth() / 2, y - bitmap.getHeight() / 2, bitmap);
     }
@@ -523,17 +465,5 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         dc.drawText(x + iconW + gap, y, font, label,
             Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
         return x;
-    }
-
-    function formatSteps(steps) {
-        if (steps >= 10000) {
-            return (steps / 1000).toNumber().toString() + "K";
-        }
-        if (steps >= 1000) {
-            var thousands = (steps / 1000).toNumber();
-            var hundreds = ((steps % 1000) / 100).toNumber();
-            return thousands.toString() + "." + hundreds.toString() + "K";
-        }
-        return steps.toString();
     }
 }

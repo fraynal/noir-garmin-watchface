@@ -1,0 +1,57 @@
+<!-- Éditeur de cadran natif (fenix 8 et plus récentes) : les trois indicateurs
+     du bas, gauche (1), centre (2), droite (3). Lu par NoirIndicators. -->
+<watchface-config>
+    <styles>
+        <style id="0" label="@Strings.AppName" default="true"/>
+    </styles>
+    <data>
+        <!-- gauche -->
+        <complication id="1">
+            <type default="true">Complications.COMPLICATION_TYPE_HEART_RATE</type>
+            <type>Complications.COMPLICATION_TYPE_BODY_BATTERY</type>
+            <type>Complications.COMPLICATION_TYPE_STEPS</type>
+            <type>Complications.COMPLICATION_TYPE_STRESS</type>
+            <type>Complications.COMPLICATION_TYPE_CALORIES</type>
+            <type>Complications.COMPLICATION_TYPE_FLOORS_CLIMBED</type>
+            <type>Complications.COMPLICATION_TYPE_INTENSITY_MINUTES</type>
+            <type>Complications.COMPLICATION_TYPE_RESPIRATION_RATE</type>
+            <type>Complications.COMPLICATION_TYPE_PULSE_OX</type>
+            <type>Complications.COMPLICATION_TYPE_RECOVERY_TIME</type>
+            <type>Complications.COMPLICATION_TYPE_SLEEP_SCORE</type>
+            <type>Complications.COMPLICATION_TYPE_ALTITUDE</type>
+            <type>Complications.COMPLICATION_TYPE_SOLAR_INPUT</type>
+        </complication>
+        <!-- centre -->
+        <complication id="2">
+            <type>Complications.COMPLICATION_TYPE_HEART_RATE</type>
+            <type default="true">Complications.COMPLICATION_TYPE_BODY_BATTERY</type>
+            <type>Complications.COMPLICATION_TYPE_STEPS</type>
+            <type>Complications.COMPLICATION_TYPE_STRESS</type>
+            <type>Complications.COMPLICATION_TYPE_CALORIES</type>
+            <type>Complications.COMPLICATION_TYPE_FLOORS_CLIMBED</type>
+            <type>Complications.COMPLICATION_TYPE_INTENSITY_MINUTES</type>
+            <type>Complications.COMPLICATION_TYPE_RESPIRATION_RATE</type>
+            <type>Complications.COMPLICATION_TYPE_PULSE_OX</type>
+            <type>Complications.COMPLICATION_TYPE_RECOVERY_TIME</type>
+            <type>Complications.COMPLICATION_TYPE_SLEEP_SCORE</type>
+            <type>Complications.COMPLICATION_TYPE_ALTITUDE</type>
+            <type>Complications.COMPLICATION_TYPE_SOLAR_INPUT</type>
+        </complication>
+        <!-- droite -->
+        <complication id="3">
+            <type>Complications.COMPLICATION_TYPE_HEART_RATE</type>
+            <type>Complications.COMPLICATION_TYPE_BODY_BATTERY</type>
+            <type default="true">Complications.COMPLICATION_TYPE_STEPS</type>
+            <type>Complications.COMPLICATION_TYPE_STRESS</type>
+            <type>Complications.COMPLICATION_TYPE_CALORIES</type>
+            <type>Complications.COMPLICATION_TYPE_FLOORS_CLIMBED</type>
+            <type>Complications.COMPLICATION_TYPE_INTENSITY_MINUTES</type>
+            <type>Complications.COMPLICATION_TYPE_RESPIRATION_RATE</type>
+            <type>Complications.COMPLICATION_TYPE_PULSE_OX</type>
+            <type>Complications.COMPLICATION_TYPE_RECOVERY_TIME</type>
+            <type>Complications.COMPLICATION_TYPE_SLEEP_SCORE</type>
+            <type>Complications.COMPLICATION_TYPE_ALTITUDE</type>
+            <type>Complications.COMPLICATION_TYPE_SOLAR_INPUT</type>
+        </complication>
+    </data>
+</watchface-config>
