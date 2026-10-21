@@ -272,8 +272,11 @@ tracés, sans texte SVG. Ancienne icône du modèle Garmin :
 - Score de sommeil : API 6.0.2 (absent des montres en 5.2, qui n'ont pas d'éditeur).
 - Icônes : 10 nouvelles, générées avec `docs/icons-prompt.md` (originaux dans
   `design/icons-original/indicators/`).
-- « Auto » (indicateurs contextuels) : prévu comme style de l'éditeur
-  (`<style>` dans `watchface_config.xml`).
+- « Auto » (indicateurs contextuels) : sera un interrupteur dans nos réglages
+  (*Customize*), pas un style de l'éditeur (décision du 21/10/2026).
+- Style clair écarté (21/10/2026) : surcoût de batterie sur l'écran actif
+  (AMOLED), seconde série d'icônes nécessaire, contraire à l'identité « Noir ».
+  Le menu *Styles* garde le seul style « Noir ».
 - Validé sur fenix 9 Pro le 21/10/2026 : MENU > Cadran > Noir propose
   *Customize* (nos réglages), *Data* (les 3 indicateurs, éditeur natif) et
   *Styles* (« Noir » seul). Toutes les données n'ont pas été essayées.
