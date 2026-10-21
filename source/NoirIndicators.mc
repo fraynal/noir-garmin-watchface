@@ -4,6 +4,8 @@ import Toybox.Application;
 import Toybox.Complications;
 import Toybox.Lang;
 import Toybox.System;
+import Toybox.Time;
+import Toybox.UserProfile;
 import Toybox.WatchUi;
 
 // Les trois indicateurs du bas (gauche, centre, droite). Choisis dans l'éditeur
@@ -11,16 +13,24 @@ import Toybox.WatchUi;
 // 1, 2, 3). Montres sans éditeur (avant la fenix 8) : FC, Body Battery, pas.
 class NoirIndicators {
 
+    // Données affichées (mode Auto ou choix de l'éditeur) et choix de l'éditeur.
     var mIds as Array<Complications.Id>;
+    var mConfigIds as Array<Complications.Id>;
+    // Mode Auto (réglage AutoIndicators), durée des moments en secondes, et
+    // minute du dernier calcul du moment (recalcul une fois par minute).
+    var mAuto = false;
+    var mWindow = 3600;
+    var mLastMinute = -1;
     var mTexts as Array<String> = ["--", "--", "--"];
     var mIcons as Dictionary<Complications.Type, WatchUi.BitmapResource> = {};
 
     function initialize() {
-        mIds = [
-            new Complications.Id(Complications.COMPLICATION_TYPE_HEART_RATE),
-            new Complications.Id(Complications.COMPLICATION_TYPE_BODY_BATTERY),
-            new Complications.Id(Complications.COMPLICATION_TYPE_STEPS)
-        ];
+        mConfigIds = ids([
+            Complications.COMPLICATION_TYPE_HEART_RATE,
+            Complications.COMPLICATION_TYPE_BODY_BATTERY,
+            Complications.COMPLICATION_TYPE_STEPS
+        ]);
+        mIds = mConfigIds;
         load(null);
     }
 
@@ -37,10 +47,111 @@ class NoirIndicators {
         for (var i = 0; i < refs.size(); i++) {
             var slot = refs[i].uniqueIdentifier;
             if (slot != null && slot >= 1 && slot <= 3 && refs[i].complicationId != null) {
-                mIds[slot - 1] = refs[i].complicationId as Complications.Id;
+                mConfigIds[slot - 1] = refs[i].complicationId as Complications.Id;
             }
         }
-        refresh();
+        if (!mAuto) {
+            mIds = mConfigIds;
+            refresh();
+        }
+    }
+
+    // Réglages AutoIndicators et AutoWindow (0 = 30 min, 1 = 1 h, 2 = 1 h 30).
+    function setAuto(enabled as Boolean, window as Number) as Void {
+        mAuto = enabled;
+        mWindow = [1800, 3600, 5400][window];
+        mLastMinute = -1;
+        if (!mAuto) {
+            show(mConfigIds);
+        }
+    }
+
+    // Mode Auto : à chaque minute, données du moment de la journée.
+    function update(clock as System.ClockTime) as Void {
+        var minute = clock.hour * 60 + clock.min;
+        if (!mAuto || minute == mLastMinute) {
+            return;
+        }
+        mLastMinute = minute;
+        show(ids(autoTypes(clock)));
+    }
+
+    // Gauche = état du corps, centre = énergie, droite = progression.
+    function autoTypes(clock as System.ClockTime) as Array<Complications.Type> {
+        var hr = Complications.COMPLICATION_TYPE_HEART_RATE;
+        var bb = Complications.COMPLICATION_TYPE_BODY_BATTERY;
+        var intensity = Complications.COMPLICATION_TYPE_INTENSITY_MINUTES;
+        if (afterActivity()) {
+            return [hr, bb, intensity];
+        }
+        var profile = UserProfile.getProfile();
+        var now = clock.hour * 3600 + clock.min * 60 + clock.sec;
+        if (profile != null && profile.wakeTime != null
+                && within(now, profile.wakeTime.value(), mWindow)) {
+            // Score de sommeil absent des montres en API 5.2 : FC à la place.
+            var sleep = Complications.COMPLICATION_TYPE_SLEEP_SCORE;
+            return [hasValue(sleep) ? sleep : hr, bb, intensity];
+        }
+        if (profile != null && profile.sleepTime != null
+                && within(now, profile.sleepTime.value() - mWindow, mWindow)) {
+            return [Complications.COMPLICATION_TYPE_STRESS, bb, Complications.COMPLICATION_TYPE_STEPS];
+        }
+        return [hr, bb, Complications.COMPLICATION_TYPE_STEPS];
+    }
+
+    // now dans [start, start + length[, en secondes depuis minuit (passe minuit).
+    function within(now as Number, start as Number, length as Number) as Boolean {
+        return ((now - start) % 86400 + 86400) % 86400 < length;
+    }
+
+    // Une activité de l'historique s'est terminée il y a moins de mWindow.
+    function afterActivity() as Boolean {
+        var history = UserProfile.getUserActivityHistory();
+        var now = Time.now().value();
+        var activity = history.next();
+        while (activity != null) {
+            if (activity.startTime != null && activity.duration != null) {
+                var ago = now - activity.startTime.value() - activity.duration.value();
+                if (ago >= 0 && ago < mWindow) {
+                    return true;
+                }
+            }
+            activity = history.next();
+        }
+        return false;
+    }
+
+    function hasValue(type as Complications.Type) as Boolean {
+        try {
+            var complication = Complications.getComplication(new Complications.Id(type));
+            return complication != null && complication.value != null;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function ids(types as Array<Complications.Type>) as Array<Complications.Id> {
+        return [
+            new Complications.Id(types[0]),
+            new Complications.Id(types[1]),
+            new Complications.Id(types[2])
+        ];
+    }
+
+    // Affiche ces données ; réabonnement seulement si elles changent.
+    function show(newIds as Array<Complications.Id>) as Void {
+        var same = true;
+        for (var i = 0; i < 3; i++) {
+            if (!newIds[i].equals(mIds[i])) {
+                same = false;
+            }
+        }
+        if (same) {
+            return;
+        }
+        mIds = newIds;
+        Complications.unsubscribeFromAllUpdates();
+        subscribe();
     }
 
     // À l'affichage du cadran : abonnement aux trois complications choisies.

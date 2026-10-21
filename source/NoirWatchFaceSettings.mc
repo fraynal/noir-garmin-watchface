@@ -14,6 +14,8 @@ class NoirSettingsMenu extends WatchUi.Menu2 {
         addItem(new WatchUi.MenuItem(Rez.Strings.TemperatureUnitTitle, choiceLabel("TemperatureUnit"), "TemperatureUnit", null));
         addToggle("ShowBatteryPercent", Rez.Strings.ShowBatteryPercentTitle);
         addToggle("ShowStatusIcons", Rez.Strings.ShowStatusIconsTitle);
+        addToggle("AutoIndicators", Rez.Strings.AutoIndicatorsTitle);
+        addItem(new WatchUi.MenuItem(Rez.Strings.AutoWindowTitle, choiceLabel("AutoWindow"), "AutoWindow", null));
     }
 
     function addToggle(key as String, label as ResourceId) as Void {
@@ -40,10 +42,13 @@ class NoirSettingsDelegate extends WatchUi.Menu2InputDelegate {
     }
 }
 
-// Libellé du choix courant d'un réglage à 3 valeurs (0 = comme la montre).
+// Libellé du choix courant d'un réglage à 3 valeurs.
 function choiceLabel(key as String) as ResourceId {
-    var labels = key.equals("TimeFormat")
-        ? [Rez.Strings.FollowWatch, Rez.Strings.TimeFormat24, Rez.Strings.TimeFormat12]
-        : [Rez.Strings.FollowWatch, Rez.Strings.Celsius, Rez.Strings.Fahrenheit];
+    var labels = [Rez.Strings.FollowWatch, Rez.Strings.Celsius, Rez.Strings.Fahrenheit];
+    if (key.equals("TimeFormat")) {
+        labels = [Rez.Strings.FollowWatch, Rez.Strings.TimeFormat24, Rez.Strings.TimeFormat12];
+    } else if (key.equals("AutoWindow")) {
+        labels = [Rez.Strings.Window30, Rez.Strings.Window60, Rez.Strings.Window90];
+    }
     return labels[Properties.getValue(key) as Number];
 }

@@ -25,4 +25,14 @@
     <setting propertyKey="@Properties.ShowStatusIcons" title="@Strings.ShowStatusIconsTitle">
         <settingConfig type="boolean" />
     </setting>
+    <setting propertyKey="@Properties.AutoIndicators" title="@Strings.AutoIndicatorsTitle">
+        <settingConfig type="boolean" />
+    </setting>
+    <setting propertyKey="@Properties.AutoWindow" title="@Strings.AutoWindowTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.Window30</listEntry>
+            <listEntry value="1">@Strings.Window60</listEntry>
+            <listEntry value="2">@Strings.Window90</listEntry>
+        </settingConfig>
+    </setting>
 </settings>

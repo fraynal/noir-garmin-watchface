@@ -5,6 +5,10 @@
     <property id="ShowWeather" type="boolean">true</property>
     <property id="ShowBatteryPercent" type="boolean">true</property>
     <property id="ShowStatusIcons" type="boolean">true</property>
+    <!-- Indicateurs automatiques selon le moment de la journée (remplace Data). -->
+    <property id="AutoIndicators" type="boolean">false</property>
+    <!-- Durée des moments : 0 = 30 min, 1 = 1 h, 2 = 1 h 30 -->
+    <property id="AutoWindow" type="number">1</property>
     <!-- 0 = comme la montre, 1 = 24 h, 2 = 12 h (AM/PM) -->
     <property id="TimeFormat" type="number">0</property>
 </properties>

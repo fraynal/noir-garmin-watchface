@@ -33,9 +33,9 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
 
     function initialize() {
         WatchFace.initialize();
+        mIndicators = new NoirIndicators();
         loadSettings();
         // Charger une seule fois les ressources (pas dans onUpdate).
-        mIndicators = new NoirIndicators();
         mPhoneOff = WatchUi.loadResource(Rez.Drawables.phone_off);
         mPhoneOffDim = WatchUi.loadResource(Rez.Drawables.phone_off_dim);
         mDnd = WatchUi.loadResource(Rez.Drawables.dnd);
@@ -66,6 +66,8 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         mShowBatteryPercent = Properties.getValue("ShowBatteryPercent");
         mTimeFormat = Properties.getValue("TimeFormat");
         mShowStatusIcons = Properties.getValue("ShowStatusIcons");
+        mIndicators.setAuto(Properties.getValue("AutoIndicators") as Boolean,
+            Properties.getValue("AutoWindow") as Number);
     }
 
     // « Comme la montre » : relu à chaque dessin, la montre peut changer de réglage.
@@ -146,7 +148,8 @@ class NoirWatchFaceView extends WatchUi.WatchFace {
         var timeY = (h * 0.47).toNumber();
         drawTime(dc, cx, timeY, s, Graphics.FONT_NUMBER_HOT, white, clock, mShowSeconds, 0);
 
-        // INDICATEURS : gauche, centre, droite
+        // INDICATEURS : gauche, centre, droite (mode Auto : selon le moment)
+        mIndicators.update(clock);
         var spacing = (w * INDICATOR_SPACING).toNumber();
         var iconY = (h * 0.66).toNumber();
         var valueY = (h * 0.735).toNumber();

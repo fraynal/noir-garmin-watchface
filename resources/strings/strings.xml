@@ -11,4 +11,9 @@
     <string id="FollowWatch">Same as watch</string>
     <string id="ShowBatteryPercentTitle">Battery percentage</string>
     <string id="ShowStatusIconsTitle">Status icons</string>
+    <string id="AutoIndicatorsTitle">Auto indicators</string>
+    <string id="AutoWindowTitle">Auto window</string>
+    <string id="Window30">30 min</string>
+    <string id="Window60">1 h</string>
+    <string id="Window90">1 h 30</string>
 </strings>

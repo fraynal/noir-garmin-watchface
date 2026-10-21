@@ -281,6 +281,27 @@ tracés, sans texte SVG. Ancienne icône du modèle Garmin :
   *Customize* (nos réglages), *Data* (les 3 indicateurs, éditeur natif) et
   *Styles* (« Noir » seul). Toutes les données n'ont pas été essayées.
 
+## Chantier 16 : indicateurs automatiques (spécification du 21/10/2026)
+
+Option *Auto indicators* (désactivée par défaut). Activée, elle remplace les
+choix de *Data* (jamais de mélange). Chaque emplacement garde un rôle :
+gauche = état du corps, centre = énergie (Body Battery, toujours), droite =
+progression.
+
+| Moment (priorité décroissante) | Détection | Gauche | Centre | Droite |
+|---|---|---|---|---|
+| Après une activité | fin de la dernière activité de l'historique depuis moins de D | FC | Body Battery | Minutes d'intensité |
+| Réveil | heure de lever du profil, pendant D | Score de sommeil | Body Battery | Minutes d'intensité |
+| Soirée | D avant l'heure de coucher du profil | Stress | Body Battery | Pas |
+| Journée | sinon | FC | Body Battery | Pas |
+| Nuit | heures de sommeil | écran de nuit (déjà géré) | | |
+
+- D = option *Auto window* : 30 min, 1 h (défaut), 1 h 30.
+- Récupération écartée (jugée trop prudente par Garmin) au profit des minutes
+  d'intensité, à comparer à la Body Battery.
+- Pas d'exception d'alerte (Body Battery basse…) dans cette version.
+- Score de sommeil indisponible (montres en API 5.2) : FC à la place.
+
 ## Feuille de route (révisée le 20/10/2026)
 
 ### Montres

@@ -11,4 +11,9 @@
     <string id="FollowWatch">Comme la montre</string>
     <string id="ShowBatteryPercentTitle">Pourcentage de batterie</string>
     <string id="ShowStatusIconsTitle">Indicateurs d'état</string>
+    <string id="AutoIndicatorsTitle">Indicateurs automatiques</string>
+    <string id="AutoWindowTitle">Durée des moments</string>
+    <string id="Window30">30 min</string>
+    <string id="Window60">1 h</string>
+    <string id="Window90">1 h 30</string>
 </strings>
