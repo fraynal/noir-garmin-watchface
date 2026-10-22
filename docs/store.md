@@ -60,11 +60,12 @@ Noir collects no data and sends nothing.
 
 **An open-source project in development.** Noir has been tested on fēnix 9 Pro 47 mm only. Feedback from other watches, bug reports and contributions are welcome on GitHub: https://github.com/fraynal/noir-garmin-watchface
 
-### What's new (1.2.0)
+### What's new (1.2.1)
 
 - Choose your three indicators in the watch face editor (fēnix 8 and newer): 13 data fields available.
 - Auto indicators: the data that matter at each moment (after waking up, after an activity, rest of the day).
 - Heart rate now updates continuously.
+- New default order: heart rate, steps, Body Battery.
 
 1.0.0: first release.
 
@@ -113,11 +114,12 @@ Noir ne collecte aucune donnée et n'envoie rien.
 
 **Un projet open source en développement.** Noir n'a été testé que sur fēnix 9 Pro 47 mm. Retours sur d'autres montres, signalements de bugs et contributions sont les bienvenus sur GitHub : https://github.com/fraynal/noir-garmin-watchface
 
-### Nouveautés (1.2.0)
+### Nouveautés (1.2.1)
 
 - Choisissez vos trois indicateurs dans l'éditeur de cadran (fēnix 8 et plus récentes) : 13 données disponibles.
 - Indicateurs automatiques : les données utiles à chaque moment (réveil, après une activité, reste de la journée).
 - La fréquence cardiaque s'actualise en continu.
+- Nouvel ordre par défaut : fréquence cardiaque, pas, Body Battery.
 
 1.0.0 : première version.
 
