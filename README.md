@@ -26,14 +26,14 @@ Noir is a free [Connect IQ](https://developer.garmin.com/connect-iq/) watch face
 
 The three indicators at the bottom (default: heart rate, Body Battery, steps) are chosen in the native watch face editor of the watch: hold MENU > Watch Face > Noir > Data, then pick an indicator and its data. The editor exists on fēnix 8 and newer watches; on Forerunner 965, Venu 3 and epix Pro (Gen 2) the default indicators are used.
 
-**Auto indicators** (setting, off by default) replaces your choices with the data that matter at each moment. The center always shows Body Battery; the duration of each moment is set by *Auto window* (30 min, 1 h or 1 h 30).
+**Auto indicators** (setting, off by default) replaces your choices with the data that matter at each moment. The center shows the key data of the moment; each data always stays in the same column. The duration of each moment is set by *Auto window* (30 min, 1 h or 1 h 30).
 
 | Moment | Left | Center | Right |
 |---|---|---|---|
-| After an activity | heart rate | Body Battery | intensity minutes |
-| After waking up | heart rate | Body Battery | sleep score |
-| Before bedtime | stress | Body Battery | steps |
-| Rest of the day | heart rate | Body Battery | steps |
+| After waking up | heart rate | sleep score | Body Battery |
+| After an activity | heart rate | intensity minutes | Body Battery |
+| Before bedtime | stress | steps | Body Battery |
+| Rest of the day | heart rate | steps | Body Battery |
 
 Wake-up and bedtime come from the sleep hours set in Garmin Connect.
 

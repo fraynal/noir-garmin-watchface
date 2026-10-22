@@ -284,25 +284,30 @@ tracés, sans texte SVG. Ancienne icône du modèle Garmin :
 ## Chantier 16 : indicateurs automatiques (spécification du 21/10/2026)
 
 Option *Auto indicators* (désactivée par défaut). Activée, elle remplace les
-choix de *Data* (jamais de mélange). Chaque emplacement garde un rôle :
-gauche = état instantané du corps, centre = énergie (Body Battery, toujours),
-droite = bilan du moment.
+choix de *Data* (jamais de mélange). Règle : **une donnée reste toujours dans
+la même colonne** ; le centre porte la donnée phare du moment.
+
+| Colonne | Données |
+|---|---|
+| Gauche : état du corps | FC, stress |
+| Centre : donnée phare | score de sommeil, pas, minutes d'intensité |
+| Droite : énergie | Body Battery |
 
 | Moment (priorité décroissante) | Détection | Gauche | Centre | Droite |
 |---|---|---|---|---|
-| Après une activité | fin de la dernière activité de l'historique depuis moins de D | FC | Body Battery | Minutes d'intensité |
-| Réveil | heure de lever du profil, pendant D | FC | Body Battery | Score de sommeil |
-| Soirée | D avant l'heure de coucher du profil | Stress | Body Battery | Pas |
-| Journée | sinon | FC | Body Battery | Pas |
+| Après une activité | fin de la dernière activité de l'historique depuis moins de D | FC | Minutes d'intensité | Body Battery |
+| Réveil | heure de lever du profil, pendant D | FC | Score de sommeil | Body Battery |
+| Soirée | D avant l'heure de coucher du profil | Stress | Pas | Body Battery |
+| Journée | sinon | FC | Pas | Body Battery |
 | Nuit | heures de sommeil | écran de nuit (déjà géré) | | |
 
 - D = option *Auto window* : 30 min, 1 h (défaut), 1 h 30.
 - Récupération écartée (jugée trop prudente par Garmin) au profit des minutes
   d'intensité, à comparer à la Body Battery.
 - Pas d'exception d'alerte (Body Battery basse…) dans cette version.
-- Score de sommeil indisponible (montres en API 5.2) : minutes d'intensité.
-- Révisé le 21/10/2026 après essai : au réveil FC / Body Battery / score de
-  sommeil (droite = bilan du moment : nuit, effort, journée).
+- Score de sommeil indisponible (montres en API 5.2) : minutes d'intensité au centre.
+- Révisé le 22/10/2026 : centre = donnée phare (il ne changeait jamais), et une
+  donnée ne change jamais de colonne au cours de la journée.
 
 ## Feuille de route (révisée le 20/10/2026)
 

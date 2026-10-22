@@ -76,13 +76,15 @@ class NoirIndicators {
         show(ids(autoTypes(clock)));
     }
 
-    // Gauche = état instantané du corps, centre = énergie, droite = bilan du moment.
+    // Une donnée garde toujours la même colonne : gauche = état du corps (FC, stress),
+    // centre = donnée phare du moment (sommeil, pas, intensité), droite = Body Battery.
     function autoTypes(clock as System.ClockTime) as Array<Complications.Type> {
         var hr = Complications.COMPLICATION_TYPE_HEART_RATE;
         var bb = Complications.COMPLICATION_TYPE_BODY_BATTERY;
         var intensity = Complications.COMPLICATION_TYPE_INTENSITY_MINUTES;
+        var steps = Complications.COMPLICATION_TYPE_STEPS;
         if (afterActivity()) {
-            return [hr, bb, intensity];
+            return [hr, intensity, bb];
         }
         var profile = UserProfile.getProfile();
         var now = clock.hour * 3600 + clock.min * 60 + clock.sec;
@@ -90,13 +92,13 @@ class NoirIndicators {
                 && within(now, profile.wakeTime.value(), mWindow)) {
             // Score de sommeil absent des montres en API 5.2 : minutes d'intensité.
             var sleep = Complications.COMPLICATION_TYPE_SLEEP_SCORE;
-            return [hr, bb, hasValue(sleep) ? sleep : intensity];
+            return [hr, hasValue(sleep) ? sleep : intensity, bb];
         }
         if (profile != null && profile.sleepTime != null
                 && within(now, profile.sleepTime.value() - mWindow, mWindow)) {
-            return [Complications.COMPLICATION_TYPE_STRESS, bb, Complications.COMPLICATION_TYPE_STEPS];
+            return [Complications.COMPLICATION_TYPE_STRESS, steps, bb];
         }
-        return [hr, bb, Complications.COMPLICATION_TYPE_STEPS];
+        return [hr, steps, bb];
     }
 
     // now dans [start, start + length[, en secondes depuis minuit (passe minuit).
