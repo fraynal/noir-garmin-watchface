@@ -289,16 +289,15 @@ la même colonne** ; le centre porte la donnée phare du moment.
 
 | Colonne | Données |
 |---|---|
-| Gauche : état du corps | FC, stress |
-| Centre : donnée phare | score de sommeil, pas, minutes d'intensité |
+| Gauche : état du corps | FC (réveil, après une activité), stress sinon |
+| Centre : donnée phare | score de sommeil, minutes d'intensité, pas |
 | Droite : énergie | Body Battery |
 
 | Moment (priorité décroissante) | Détection | Gauche | Centre | Droite |
 |---|---|---|---|---|
 | Après une activité | fin de la dernière activité de l'historique depuis moins de D | FC | Minutes d'intensité | Body Battery |
 | Réveil | heure de lever du profil, pendant D | FC | Score de sommeil | Body Battery |
-| Soirée | D avant l'heure de coucher du profil | Stress | Pas | Body Battery |
-| Journée | sinon | FC | Pas | Body Battery |
+| Reste de la journée | sinon | Stress | Pas | Body Battery |
 | Nuit | heures de sommeil | écran de nuit (déjà géré) | | |
 
 - D = option *Auto window* : 30 min, 1 h (défaut), 1 h 30.
@@ -308,6 +307,9 @@ la même colonne** ; le centre porte la donnée phare du moment.
 - Score de sommeil indisponible (montres en API 5.2) : minutes d'intensité au centre.
 - Révisé le 22/10/2026 : centre = donnée phare (il ne changeait jamais), et une
   donnée ne change jamais de colonne au cours de la journée.
+- Révisé le 22/10/2026 (option B) : la FC seulement quand le cœur raconte
+  quelque chose (réveil, après une activité), le stress le reste du temps ; la
+  soirée, devenue identique à la journée, est supprimée (3 moments).
 
 ## Feuille de route (révisée le 20/10/2026)
 

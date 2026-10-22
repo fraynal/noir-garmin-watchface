@@ -76,8 +76,9 @@ class NoirIndicators {
         show(ids(autoTypes(clock)));
     }
 
-    // Une donnée garde toujours la même colonne : gauche = état du corps (FC, stress),
-    // centre = donnée phare du moment (sommeil, pas, intensité), droite = Body Battery.
+    // Une donnée garde toujours la même colonne : gauche = FC quand le cœur raconte
+    // quelque chose (réveil, après une activité), stress sinon ; centre = donnée phare
+    // du moment (sommeil, intensité, pas) ; droite = Body Battery.
     function autoTypes(clock as System.ClockTime) as Array<Complications.Type> {
         var hr = Complications.COMPLICATION_TYPE_HEART_RATE;
         var bb = Complications.COMPLICATION_TYPE_BODY_BATTERY;
@@ -94,11 +95,7 @@ class NoirIndicators {
             var sleep = Complications.COMPLICATION_TYPE_SLEEP_SCORE;
             return [hr, hasValue(sleep) ? sleep : intensity, bb];
         }
-        if (profile != null && profile.sleepTime != null
-                && within(now, profile.sleepTime.value() - mWindow, mWindow)) {
-            return [Complications.COMPLICATION_TYPE_STRESS, steps, bb];
-        }
-        return [hr, steps, bb];
+        return [Complications.COMPLICATION_TYPE_STRESS, steps, bb];
     }
 
     // now dans [start, start + length[, en secondes depuis minuit (passe minuit).

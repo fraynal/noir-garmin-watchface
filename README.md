@@ -32,10 +32,9 @@ The three indicators at the bottom (default: heart rate, Body Battery, steps) ar
 |---|---|---|---|
 | After waking up | heart rate | sleep score | Body Battery |
 | After an activity | heart rate | intensity minutes | Body Battery |
-| Before bedtime | stress | steps | Body Battery |
-| Rest of the day | heart rate | steps | Body Battery |
+| Rest of the day | stress | steps | Body Battery |
 
-Wake-up and bedtime come from the sleep hours set in Garmin Connect.
+The wake-up time comes from the sleep hours set in Garmin Connect; activities come from the watch's activity history.
 
 ## Settings
 

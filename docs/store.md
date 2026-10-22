@@ -38,7 +38,7 @@ A large, centered time with only what matters around it: weather, date, heart ra
 
 **Your three indicators**, chosen in the watch face editor (hold MENU / Watch Face / Noir / Data; fēnix 8 and newer): heart rate, Body Battery, steps, stress, calories, floors, intensity minutes, respiration, pulse ox, recovery time, sleep score, altitude, solar input.
 
-**Auto indicators** (option): the indicators follow your day: sleep score after waking up, intensity minutes after an activity, stress before bedtime.
+**Auto indicators** (option): the indicators follow your day: sleep score after waking up, intensity minutes after an activity, stress and steps the rest of the day.
 
 **Settings** (Garmin Connect app, or on the watch: hold MENU / Watch Face / Noir / Customize):
 - Show seconds
@@ -62,7 +62,7 @@ Noir collects no data and sends nothing.
 ### What's new (1.1.0)
 
 - Choose your three indicators in the watch face editor (fēnix 8 and newer): 13 data fields available.
-- Auto indicators: the data that matter at each moment (after waking up, after an activity, before bedtime).
+- Auto indicators: the data that matter at each moment (after waking up, after an activity, rest of the day).
 - Heart rate now updates continuously.
 
 1.0.0: first release.
@@ -91,7 +91,7 @@ Une grande heure centrée, et autour seulement l'essentiel : météo, date, fré
 
 **Vos trois indicateurs**, choisis dans l'éditeur de cadran de la montre (maintenir MENU / Cadran / Noir / Data ; fēnix 8 et plus récentes) : fréquence cardiaque, Body Battery, pas, stress, calories, étages, minutes d'intensité, respiration, SpO2, temps de récupération, score de sommeil, altitude, recharge solaire.
 
-**Indicateurs automatiques** (option) : les indicateurs suivent votre journée : score de sommeil au réveil, minutes d'intensité après une activité, stress avant le coucher.
+**Indicateurs automatiques** (option) : les indicateurs suivent votre journée : score de sommeil au réveil, minutes d'intensité après une activité, stress et pas le reste du temps.
 
 **Réglages** (app Garmin Connect, ou sur la montre : maintenir MENU / Cadran / Noir / Personnaliser) :
 - Afficher les secondes
@@ -115,7 +115,7 @@ Noir ne collecte aucune donnée et n'envoie rien.
 ### Nouveautés (1.1.0)
 
 - Choisissez vos trois indicateurs dans l'éditeur de cadran (fēnix 8 et plus récentes) : 13 données disponibles.
-- Indicateurs automatiques : les données utiles à chaque moment (réveil, après une activité, avant le coucher).
+- Indicateurs automatiques : les données utiles à chaque moment (réveil, après une activité, reste de la journée).
 - La fréquence cardiaque s'actualise en continu.
 
 1.0.0 : première version.
