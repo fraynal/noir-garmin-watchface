@@ -25,7 +25,7 @@ Noir: the AMOLED watch face you can actually read.
 
 ### Description
 
-A large, centered time with only what matters around it: weather, date, heart rate, Body Battery, steps and watch battery. Everything else stays black.
+A large, centered time with only what matters around it: weather, date, heart rate, steps, Body Battery and watch battery. Everything else stays black.
 
 **Readable always-on.** When your watch dims the screen, Noir switches to a thicker, brighter time with the date and battery, while staying well below Garmin's 10% luminance limit and shifting a few pixels every minute to protect your AMOLED screen.
 
@@ -53,8 +53,8 @@ A large, centered time with only what matters around it: weather, date, heart ra
 Settings are available in English and French.
 
 **Permissions:**
-- *Complications*: to read heart rate, Body Battery, sunrise and sunset.
-- *User profile*: only to read your sleep hours for the night screen.
+- *Complications*: to read your indicators (heart rate, steps, Body Battery…) and sunrise and sunset.
+- *User profile*: only to read your sleep hours (night screen, Auto indicators) and your recent activities (Auto indicators).
 
 Noir collects no data and sends nothing.
 
@@ -79,7 +79,7 @@ Noir : un cadran AMOLED minimaliste et lisible
 
 ### Description
 
-Une grande heure centrée, et autour seulement l'essentiel : météo, date, fréquence cardiaque, Body Battery, pas et batterie de la montre. Tout le reste reste noir.
+Une grande heure centrée, et autour seulement l'essentiel : météo, date, fréquence cardiaque, pas, Body Battery et batterie de la montre. Tout le reste reste noir.
 
 **Une veille lisible.** Quand la montre assombrit l'écran, Noir affiche une heure plus épaisse et plus claire, avec la date et la batterie, tout en restant bien sous la limite de luminance de 10 % fixée par Garmin et en se décalant de quelques pixels chaque minute pour protéger l'écran AMOLED.
 
@@ -107,8 +107,8 @@ Une grande heure centrée, et autour seulement l'essentiel : météo, date, fré
 Réglages disponibles en anglais et en français.
 
 **Permissions :**
-- *Complications* : pour lire la fréquence cardiaque, la Body Battery, le lever et le coucher du soleil.
-- *Profil utilisateur* : uniquement pour lire vos heures de sommeil pour l'écran de nuit.
+- *Complications* : pour lire vos indicateurs (fréquence cardiaque, pas, Body Battery…) ainsi que le lever et le coucher du soleil.
+- *Profil utilisateur* : uniquement pour lire vos heures de sommeil (écran de nuit, indicateurs automatiques) et vos activités récentes (indicateurs automatiques).
 
 Noir ne collecte aucune donnée et n'envoie rien.
 

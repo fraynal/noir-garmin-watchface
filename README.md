@@ -1,6 +1,6 @@
 # Noir: a minimalist AMOLED watch face for Garmin
 
-A large, centered time with only what matters around it: weather, date, heart rate, Body Battery, steps and watch battery. Everything else stays black.
+A large, centered time with only what matters around it: weather, date, heart rate, steps, Body Battery and watch battery. Everything else stays black.
 
 <p align="center">
   <img src="docs/screenshots/day.png" width="200" alt="Day">
@@ -53,8 +53,8 @@ Available in the Garmin Connect app, or on the watch (hold MENU > Watch Face > N
 
 ## Permissions
 
-- **Complications**: heart rate, Body Battery, sunrise and sunset.
-- **User profile**: only to read your sleep hours for the night screen.
+- **Complications**: the indicators (heart rate, steps, Body Battery…), sunrise and sunset.
+- **User profile**: only to read your sleep hours (night screen, Auto indicators) and your recent activities (Auto indicators).
 
 Noir collects no data and sends nothing.
 
