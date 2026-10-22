@@ -305,6 +305,8 @@ la même colonne** ; le centre porte la donnée phare du moment.
   d'intensité, à comparer à la Body Battery.
 - Pas d'exception d'alerte (Body Battery basse…) dans cette version.
 - Score de sommeil indisponible (montres en API 5.2) : minutes d'intensité au centre.
+- Indicateurs par défaut (sans mode Auto) alignés sur ces colonnes le 22/10/2026 :
+  FC, pas, Body Battery (`watchface_config.xml` et repli de `NoirIndicators`).
 - Révisé le 22/10/2026 : centre = donnée phare (il ne changeait jamais), et une
   donnée ne change jamais de colonne au cours de la journée.
 - Révisé le 22/10/2026 (option B) : la FC seulement quand le cœur raconte

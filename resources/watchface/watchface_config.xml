@@ -24,8 +24,8 @@
         <!-- centre -->
         <complication id="2">
             <type>Complications.COMPLICATION_TYPE_HEART_RATE</type>
-            <type default="true">Complications.COMPLICATION_TYPE_BODY_BATTERY</type>
-            <type>Complications.COMPLICATION_TYPE_STEPS</type>
+            <type>Complications.COMPLICATION_TYPE_BODY_BATTERY</type>
+            <type default="true">Complications.COMPLICATION_TYPE_STEPS</type>
             <type>Complications.COMPLICATION_TYPE_STRESS</type>
             <type>Complications.COMPLICATION_TYPE_CALORIES</type>
             <type>Complications.COMPLICATION_TYPE_FLOORS_CLIMBED</type>
@@ -40,8 +40,8 @@
         <!-- droite -->
         <complication id="3">
             <type>Complications.COMPLICATION_TYPE_HEART_RATE</type>
-            <type>Complications.COMPLICATION_TYPE_BODY_BATTERY</type>
-            <type default="true">Complications.COMPLICATION_TYPE_STEPS</type>
+            <type default="true">Complications.COMPLICATION_TYPE_BODY_BATTERY</type>
+            <type>Complications.COMPLICATION_TYPE_STEPS</type>
             <type>Complications.COMPLICATION_TYPE_STRESS</type>
             <type>Complications.COMPLICATION_TYPE_CALORIES</type>
             <type>Complications.COMPLICATION_TYPE_FLOORS_CLIMBED</type>

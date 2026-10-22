@@ -11,6 +11,9 @@ All notable changes to Noir. Versions follow [Semantic Versioning](https://semve
   - Rest of the day: stress, steps, Body Battery.
 - **Auto window** setting: duration of the wake-up and after-activity moments (30 min, 1 h, 1 h 30).
 
+### Changed
+- Default indicators are now heart rate, steps, Body Battery, in the same columns as the Auto mode. Choices already made in the watch face editor are kept.
+
 ## [1.1.0] - not released (included in 1.2.0)
 
 ### Added

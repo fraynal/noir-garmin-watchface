@@ -10,7 +10,8 @@ import Toybox.WatchUi;
 
 // Les trois indicateurs du bas (gauche, centre, droite). Choisis dans l'éditeur
 // de cadran de la montre (resources/watchface/watchface_config.xml, emplacements
-// 1, 2, 3). Montres sans éditeur (avant la fenix 8) : FC, Body Battery, pas.
+// 1, 2, 3). Montres sans éditeur (avant la fenix 8) : FC, pas, Body Battery
+// (mêmes colonnes que le mode Auto).
 class NoirIndicators {
 
     // Données affichées (mode Auto ou choix de l'éditeur) et choix de l'éditeur.
@@ -27,8 +28,8 @@ class NoirIndicators {
     function initialize() {
         mConfigIds = ids([
             Complications.COMPLICATION_TYPE_HEART_RATE,
-            Complications.COMPLICATION_TYPE_BODY_BATTERY,
-            Complications.COMPLICATION_TYPE_STEPS
+            Complications.COMPLICATION_TYPE_STEPS,
+            Complications.COMPLICATION_TYPE_BODY_BATTERY
         ]);
         mIds = mConfigIds;
         load(null);
