@@ -311,6 +311,27 @@ la même colonne** ; le centre porte la donnée phare du moment.
   quelque chose (réveil, après une activité), le stress le reste du temps ; la
   soirée, devenue identique à la journée, est supprimée (3 moments).
 
+## Versions et sortie d'une version
+
+Versionnage sémantique : majeure (rupture), mineure (fonction), correctif (bug).
+Historique : `CHANGELOG.md` (anglais). Le Store ne lit pas la version dans le
+manifest : elle se saisit à l'envoi.
+
+| Version | Contenu | État |
+|---|---|---|
+| 1.0.0 | première version | envoyée le 20/10/2026 (tag `v1.0.0`, commit `ea940aa`) |
+| 1.1.0 | indicateurs au choix, FC en continu | jamais envoyée, incluse dans 1.2.0 |
+| 1.2.0 | indicateurs automatiques | prochaine version |
+
+Procédure de sortie :
+1. `CHANGELOG.md` : remplacer « unreleased » par la date ; nouveautés de
+   `docs/store.md` alignées.
+2. Paquet propre depuis `main` sans modification locale :
+   `monkeyc -e -r -f monkey.jungle -o store/Noir.iq -y <clé>`.
+3. Envoi sur le Store avec ce numéro de version.
+4. `git tag -a vX.Y.Z -m "Noir X.Y.Z"` sur le commit envoyé, puis
+   `git push origin vX.Y.Z` ; éventuellement une release GitHub reprenant le changelog.
+
 ## Feuille de route (révisée le 20/10/2026)
 
 ### Montres
@@ -334,7 +355,7 @@ la même colonne** ; le centre porte la donnée phare du moment.
 ### Ordre
 1. Vérifier l'affichage des montres de la vague 1 au simulateur.
 2. Publier : code sur GitHub, app sur le Store.
-3. ~~Indicateurs configurables~~ (fait, chantier 15), puis mode Auto.
+3. ~~Indicateurs configurables~~ (fait, chantier 15), ~~mode Auto~~ (fait, chantier 16) : version 1.2.0.
 4. Vague 2 de montres.
 
 ## Chantiers suivants

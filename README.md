@@ -86,6 +86,10 @@ AMOLED round watches with a 454 or 466 px screen. Smaller AMOLED screens (416 an
 
 Reports from other watches are the most useful contribution right now: open a [device report](../../issues/new?template=device-report.md) with a photo of the watch face (active screen and, if you can, always-on screen). Bug reports and pull requests are welcome too.
 
+## Versions
+
+See [CHANGELOG.md](CHANGELOG.md). Each version sent to the Connect IQ Store is tagged in git (`vX.Y.Z`).
+
 ## Known limitation
 
 When a timer, stopwatch or activity runs in the background, the watch draws its own icon at the top center of the screen, over the weather line. The Connect IQ SDK offers no way to move this icon or to know when it is shown.
